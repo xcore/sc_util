@@ -1,4 +1,4 @@
-*/.build_*/*
+*/.build*/*
 */bin/*
 *.o
 *.xe
@@ -7,3 +7,8 @@
 *.xi
 *.i
 *.a
+
+doc/Doxyfile-e
+doc/_build/
+doc/.doxygen
+doc/.sources
