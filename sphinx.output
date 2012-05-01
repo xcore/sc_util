@@ -1,0 +1,24 @@
+Running Sphinx v1.1.2
+loading pickled environment... not yet created
+building [html]: targets for 2 source files that are out of date
+updating environment: 2 added, 0 changed, 0 removed
+reading sources... [ 50%] api-c-xcore-resources
+reading sources... [100%] index
+
+/Users/henk/gitCommunity/sc_util/doc/api-c-xcore-resources.rst:14: WARNING: doxygenfunction: Cannot find function "timer_init" in doxygen xml output
+/Users/henk/gitCommunity/sc_util/doc/api-c-xcore-resources.rst:15: WARNING: doxygenfunction: Cannot find function "timer_exit" in doxygen xml output
+/Users/henk/gitCommunity/sc_util/doc/api-c-xcore-resources.rst:16: WARNING: doxygenfunction: Cannot find function "timer_in" in doxygen xml output
+/Users/henk/gitCommunity/sc_util/doc/api-c-xcore-resources.rst:17: WARNING: doxygenfunction: Cannot find function "timer_in_when_timerafter" in doxygen xml output
+/Users/henk/gitCommunity/sc_util/doc/index.rst:8: WARNING: toctree contains reference to nonexisting document u'summary'
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... done
+preparing documents... done
+writing output... [ 50%] api-c-xcore-resources
+writing output... [100%] index
+
+writing additional files... genindex search
+copying static files... done
+dumping search index... done
+dumping object inventory... done
+build succeeded, 5 warnings.
