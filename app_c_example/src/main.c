@@ -1,4 +1,21 @@
+#include <xs1.h>
 #include "timer.h"
+#include "port.h"
+
+void porttest() {
+    port_t x, y;
+    port_init(x, XS1_PORT_1A);
+    port_init_buffered(y, XS1_PORT_1B, 32);
+    port_out(x, 0xAAAAAAAA);
+    port_out(x, 0xAAAAAAAA);
+    port_out(x, 0xAAAAAAAA);
+    port_out(y, 0xAAAAAAAA);
+    port_out(y, 0xAAAAAAAA);
+    port_out(y, 0xAAAAAAAA);
+    port_out(y, 0xAAAAAAAA);
+    port_exit(x);
+    port_exit(y);
+}
 
 void timertest() {
     timer_t x;
@@ -13,6 +30,7 @@ void timertest() {
 
 
 int main(void) {
+    porttest();
     timertest();
     return 0;
 }
