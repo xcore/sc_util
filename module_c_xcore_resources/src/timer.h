@@ -2,14 +2,14 @@
 
 #define C_TIMER_H
 
-/** Type that denotes a timer.
+/** Type that denotes a timer. Variables of this type should be initalised
+ * using timer_init(), and deinitialised using timer_exit().
  */
-typedef int timer_t;
+typedef unsigned int timer_t;
 
 /** Macro that allocates and initialises a timer. This macro is to be
- * called once on every variable of the type ``timer_t``. There is a
- * limited number of timers available, and timer_t will be set to NULL.
- * When the timer is no longer required, ``timer_exit()`` should be called
+ * called once on every variable of the type ``timer_t``. If there are no timers availble, then ``t`` will be set to NULL.
+ * When the timer is no longer required, timer_exit() should be called
  * to free the timer.
  *
  * \param t timer to be initialised

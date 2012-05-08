@@ -2,13 +2,17 @@
 
 #define C_PORT_H
 
-typedef int port_t;
+/** Type that denotes a port. Variables of this type should be initalised
+ * using port_init() or port_init_buffered(), and deinitialised using
+ * port_exit().
+ */
+typedef unsigned int port_t;
 
 /** Macro that initialises a port variable to a specific port. The port
  * should be one of XS1_PORT_1A .. XS1_PORT_32A as specified on the
  * datasheet and in the xs1.h include file. Either this function or
- * ``port_init_buffered()`` should be called once for each variable of type
- * ``port_t``; ``port_exit()`` should be called afterwards.
+ * port_init_buffered() should be called once for each variable of type
+ * ``port_t``; port_exit() should be called afterwards.
  *
  * \param p      port variable to initialise
  * \param port   value that identifies which port to drive.
@@ -21,8 +25,8 @@ void port_init(port_t p, int port);
 /** Macro that initialises a port variable to a specific port, and enables
  * teh port to buffer and serialise/deserialise data. The port should be
  * one of XS1_PORT_1A .. XS1_PORT_32A as specified on the datasheet and in
- * the xs1.h include file. Either this function or ``port_init()`` should
- * be called once for each variable of type ``port_t``; ``port_exit()``
+ * the xs1.h include file. Either this function or port_init() should
+ * be called once for each variable of type ``port_t``; port_exit()
  * should be called afterwards.
  *
  * \param p      port variable to initialise
@@ -80,11 +84,11 @@ void port_in(port_t p, int data);
  * \param data   variable to input into
  * \param value  conditional value
  */
-void port_in_when_pinseq(port_t p, int data);
-#define port_in_when_pinseq(p,i,v)              \
+void port_in_when_pinseq(port_t p, int data, int value);
+#define port_in_when_pinseq(p,data,value)              \
     asm volatile("setc res[%0],0x11" :: "r" (p));       \
-    asm volatile("setd res[%0],%1" :: "r" (p), "r" (v)); \
-    asm volatile("in %0,res[%1]" : "=r" (i): "r" (p));
+    asm volatile("setd res[%0],%1" :: "r" (p), "r" (value)); \
+    asm volatile("in %0,res[%1]" : "=r" (data): "r" (p));
 
 /** Macro that inputs a value from a port conditionally; when the pins do
  * not match a specific value. In the case of an unbuffered port, the data
@@ -96,10 +100,10 @@ void port_in_when_pinseq(port_t p, int data);
  * \param data   variable to input into
  * \param value  conditional value
  */
-void port_in_when_pinsneq(port_t p, int data);
-#define port_in_when_pinsneq(p,i,v)              \
+void port_in_when_pinsneq(port_t p, int data, int value);
+#define port_in_when_pinsneq(p,data,value)              \
     asm volatile("setc res[%0],0x19" :: "r" (p));       \
-    asm volatile("setd res[%0],%1" :: "r" (p), "r" (v)); \
-    asm volatile("in %0,res[%1]" : "=r" (i): "r" (p));
+    asm volatile("setd res[%0],%1" :: "r" (p), "r" (value)); \
+    asm volatile("in %0,res[%1]" : "=r" (data): "r" (p));
 
 #endif

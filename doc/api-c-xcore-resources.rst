@@ -1,13 +1,18 @@
 C XCore Resources
 '''''''''''''''''
 
+The module c_xcore_resources is intended to provide low level access to all
+XCore features from C. This library is intended to ease porting of legacy
+software. Note that since C is not resource aware, the compiler cannot
+analyse and optimise resource access to the same depth as the XC compiler. 
+
 Timers
 ------
 
 Types
 =====
 
-.. doxygentypedef:: type_t
+.. doxygentypedef:: timer_t
 
 API
 ===
@@ -42,16 +47,16 @@ Types
 API
 ===
 
-.. doxygenfunction:: schan_init
 .. doxygenfunction:: chan_init
 .. doxygenfunction:: chan_exit
+.. doxygenfunction:: chan_out_int
+.. doxygenfunction:: chan_in_int
+.. doxygenfunction:: schan_init
 .. doxygenfunction:: schan_exit
 .. doxygenfunction:: schan_outct
 .. doxygenfunction:: schan_chkct
 .. doxygenfunction:: schan_out_int
 .. doxygenfunction:: schan_in_int
-.. doxygenfunction:: chan_out_int
-.. doxygenfunction:: chan_in_int
 
 Example
 =======

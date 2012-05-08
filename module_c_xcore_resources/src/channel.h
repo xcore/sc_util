@@ -2,8 +2,18 @@
 
 #define C_CHAN_H
 
-typedef int chanend_t;
-typedef int streaming_chanend_t;
+/** Type that denotes a channel-end. Communication channels comprise
+ * two connected channel-ends and can be created using chan_init().
+ * Channels should be deinitialised using chan_exit().
+ */
+typedef unsigned int chanend_t;
+
+/** Type that denotes a stremaing channel-end. Streaming communication
+ * channels comprise two connected streaming channel-ends and can be
+ * created using schan_init(). Streaming channels should be deinitialised
+ * using schan_exit().
+ */
+typedef unsigned int streaming_chanend_t;
 
 /** Macro that creates a streaming channel between a pair of streaming
  * channel-ends. The channel-end variables must reside on the same core.
@@ -60,6 +70,10 @@ void schan_exit(streaming_chanend_t c1, streaming_chanend_t c2);
 #define schan_outctEND(c) \
     asm volatile("outct res[%0],1" :: "r" (c));
 
+// Internal use only.
+#define schan_chkctEND(c) \
+    asm volatile("chkct res[%0],1" :: "r" (c));
+
 /** Macro that outputs a control token onto a streaming channel-end.
  *
  * \param c    the streaming channel-end.
@@ -67,7 +81,7 @@ void schan_exit(streaming_chanend_t c1, streaming_chanend_t c2);
  * \param ct   control token to be output. Legal control tokens that can be
  *             used are 0 or any value in the range 3..191 inclusive.
  */
-void schan_outct(streaming_chanend_t c1, int ct);
+void schan_outct(streaming_chanend_t c, int ct);
 #define schan_outct(c,i) \
     asm volatile("outct res[%0],%1" :: "r" (c), "r" (i));
 
@@ -117,7 +131,8 @@ void chan_out_int(chanend_t c, int data);
     schan_outctEND(c); \
     schan_chkctEND(c); \
     schan_out_int(c, data); \
-    schan_outctEND(c);
+    schan_outctEND(c); \
+    schan_chkctEND(c);
 
 /** Macro that inputs an integer from a channel.
  *
@@ -130,6 +145,7 @@ void chan_in_int(chanend_t c, int data);
     schan_outctEND(c); \
     schan_chkctEND(c); \
     schan_in_int(c, data); \
-    schan_chkctEND(c);
+    schan_chkctEND(c); \
+    schan_outctEND(c);
     
 #endif
