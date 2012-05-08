@@ -110,25 +110,25 @@ each 32 bits comprising a sequence ``1010101..10``).
 
 
 
-Threads
--------
+Asynchronous Threads
+--------------------
 
 This module supports asynchronous threads, that is, threads that are
 started and then run independently until they terminate themselves.
 
-To use xcore threads from C, include the file ``thread.h``.
+To use xcore threads from C, include the file ``athread.h``.
 
 Types
 =====
 
-.. doxygentypedef:: thread_t
+.. doxygentypedef:: athread_t
 
 API
 ===
 
-.. doxygenfunction:: thread_init
+.. doxygenfunction:: athread_init
 
-.. doxygenfunction:: thread_exit
+.. doxygenfunction:: athread_exit
 
 .. _sec_api_threads:
 
@@ -139,22 +139,22 @@ An example program is shown below. We first declare some channels for
 communciation.
 
 .. literalinclude:: app_c_example/src/main.c
-   :start-after: //:thread chan
-   :end-before: //:thread end chan
+   :start-after: //:athread chan
+   :end-before: //:athread end chan
 
 Then we declare two functions that embody the threads. In this case the
 functions perform some trivial function, and then exit. Note that the
 functions should not and do not return.
 
 .. literalinclude:: app_c_example/src/main.c
-   :start-after: //:thread funcs
-   :end-before: //:thread end funcs
+   :start-after: //:athread funcs
+   :end-before: //:athread end funcs
 
-Finally to start the thread we call ``thread_init()`` twice. Prior to that
+Finally to start the thread we call ``athread_init()`` twice. Prior to that
 we initialise the channels, so that we can communicate with the threads
 that have been created.
 
 .. literalinclude:: app_c_example/src/main.c
-   :start-after: //:thread main
-   :end-before: //:thread end main
+   :start-after: //:athread main
+   :end-before: //:athread end main
 

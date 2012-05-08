@@ -1,17 +1,17 @@
-#ifndef C_THREAD_H
+#ifndef C_ATHREAD_H
 
-#define C_THREAD_H
-/** Type that denotes a thread. Variables of this type should be initalised
- * using thread_init(). Running threads should terminate themselves using
- * thread_exit().
+#define C_ATHREAD_H
+/** Type that denotes an asynchronous thread. Variables of this type should
+ * be initalised using athread_init(). Running asynchronous threads should
+ * terminate themselves using athread_exit().
  */
-typedef unsigned int thread_t;
+typedef unsigned int athread_t;
 
 /** Macro that allocates and starts an asynchronous thread. The thread has
  * to be provided with a stack and a function to execute. When the thread
- * is finished, the thread should call thread_exit(). If a function is
+ * is finished, the thread should call athread_exit(). If a function is
  * passed as the ``pc`` argument, then this function should never return,
- * but instead call thread_exit().
+ * but instead call athread_exit().
  *
  * \param t     thread to be created.
  *
@@ -23,20 +23,20 @@ typedef unsigned int thread_t;
  *
  * \param pc    code to execute (a void function)
  */
-void thread_init(thread_t t, unsigned int *stack, unsigned num_stack_words, void (*pc)());
+void athread_init(athread_t t, unsigned int *stack, unsigned num_stack_words, void (*pc)());
 
-#define thread_init(t, stack, num_stack_words, pc)    \
+#define athread_init(t, stack, num_stack_words, pc)    \
     asm volatile("getr %0,4" : "=r" (t)); \
     asm volatile("init t[%0]:sp,%1" :: "r" (t), "r" (&stack[num_stack_words-1])); \
     asm volatile("init t[%0]:pc,%1" :: "r" (t), "r" (pc)); \
     asm volatile("start t[%0]" :: "r" (t));
 
-/** Macro that exits a thread. Statements after this macro are unreachable,
- * since it terminates the running thread.
+/** Macro that exits an asynchronous thread. Statements after this macro
+ * are unreachable, since it terminates the running thread.
  */
-void thread_exit(void);
+void athread_exit(void);
 /** \cond */
-#define thread_exit()       asm volatile("freet");
+#define athread_exit()       asm volatile("freet");
 /** \endcond */
 
 #endif

@@ -3,7 +3,7 @@
 #include "timer.h"
 #include "port.h"
 #include "channel.h"
-#include "thread.h"
+#include "athread.h"
 
 //:port main
 void porttest() {
