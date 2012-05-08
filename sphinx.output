@@ -28,9 +28,16 @@ Rendering Doxygen function void port_out
 Rendering Doxygen function void port_in
 Rendering Doxygen function void port_in_when_pinseq
 Rendering Doxygen function void port_in_when_pinsneq
-Rendering Doxygen type thread_t
-Rendering Doxygen function void thread_init
-Rendering Doxygen function void thread_exit
+Rendering Doxygen type athread_t
+Rendering Doxygen function void athread_init
+Rendering Doxygen function void athread_exit
+Rendering Doxygen type sthread_t
+Rendering Doxygen type sthread_sync_t
+Rendering Doxygen function void sthread_sync_init
+Rendering Doxygen function void sthread_init
+Rendering Doxygen function void sthread_start
+Rendering Doxygen function void sthread_exit
+Rendering Doxygen function void sthread_join
 reading sources... [100%] index
 
 looking for now-outdated files... none found

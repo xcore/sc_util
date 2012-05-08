@@ -562,28 +562,28 @@ each 32 bits comprising a sequence <tt class="docutils literal"><span class="pre
 </div>
 </div>
 </div>
-<div class="section" id="threads">
-<h2>Threads<a class="headerlink" href="#threads" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="asynchronous-threads">
+<h2>Asynchronous Threads<a class="headerlink" href="#asynchronous-threads" title="Permalink to this headline">¶</a></h2>
 <p>This module supports asynchronous threads, that is, threads that are
 started and then run independently until they terminate themselves.</p>
-<p>To use xcore threads from C, include the file <tt class="docutils literal"><span class="pre">thread.h</span></tt>.</p>
+<p>To use asynchronous XCore threads from C, include the file <tt class="docutils literal"><span class="pre">athread.h</span></tt>.</p>
 <div class="section" id="id7">
 <h3>Types<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <dl class="type">
-<dt id="thread_t">
-<tt class="descname">thread_t</tt><a class="headerlink" href="#thread_t" title="Permalink to this definition">¶</a></dt>
-<dd><p>Type that denotes a thread.</p>
-<p>Variables of this type should be initalised using <a class="reference internal" href="#thread_init" title="thread_init"><span>thread_init()</span></a>. Running threads should terminate themselves using <a class="reference internal" href="#thread_exit" title="thread_exit"><span>thread_exit()</span></a>.</p>
+<dt id="athread_t">
+<tt class="descname">athread_t</tt><a class="headerlink" href="#athread_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type that denotes an asynchronous thread.</p>
+<p>Variables of this type should be initalised using <a class="reference internal" href="#athread_init" title="athread_init"><span>athread_init()</span></a>. Running asynchronous threads should terminate themselves using <a class="reference internal" href="#athread_exit" title="athread_exit"><span>athread_exit()</span></a>.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="id8">
 <h3>API<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
-<dt id="thread_init">
-void <tt class="descname">thread_init</tt><big>(</big><a class="reference internal" href="#thread_t" title="thread_t"><span>thread_t</span></a><em>&nbsp;t</em>, unsigned int<em>&nbsp;*stack</em>, unsigned<em>&nbsp;num_stack_words</em>, void(*pc)()<big>)</big><a class="headerlink" href="#thread_init" title="Permalink to this definition">¶</a></dt>
+<dt id="athread_init">
+void <tt class="descname">athread_init</tt><big>(</big><a class="reference internal" href="#athread_t" title="athread_t"><span>athread_t</span></a><em>&nbsp;t</em>, unsigned int<em>&nbsp;*stack</em>, unsigned<em>&nbsp;num_stack_words</em>, void(*pc)()<big>)</big><a class="headerlink" href="#athread_init" title="Permalink to this definition">¶</a></dt>
 <dd><p>Macro that allocates and starts an asynchronous thread.</p>
-<p>The thread has to be provided with a stack and a function to execute. When the thread is finished, the thread should call <a class="reference internal" href="#thread_exit" title="thread_exit"><span>thread_exit()</span></a>. If a function is passed as the <tt class="docutils literal"><span class="pre">pc</span></tt> argument, then this function should never return, but instead call <a class="reference internal" href="#thread_exit" title="thread_exit"><span>thread_exit()</span></a>.</p>
+<p>The thread has to be provided with a stack and a function to execute. When the thread is finished, the thread should call <a class="reference internal" href="#athread_exit" title="athread_exit"><span>athread_exit()</span></a>. If a function is passed as the <tt class="docutils literal"><span class="pre">pc</span></tt> argument, then this function should never return, but instead call <a class="reference internal" href="#athread_exit" title="athread_exit"><span>athread_exit()</span></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -601,9 +601,9 @@ void <tt class="descname">thread_init</tt><big>(</big><a class="reference intern
 </dd></dl>
 
 <dl class="function">
-<dt id="thread_exit">
-void <tt class="descname">thread_exit</tt><big>(</big>void<big>)</big><a class="headerlink" href="#thread_exit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Macro that exits a thread.</p>
+<dt id="athread_exit">
+void <tt class="descname">athread_exit</tt><big>(</big>void<big>)</big><a class="headerlink" href="#athread_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that exits an asynchronous thread.</p>
 <p>Statements after this macro are unreachable, since it terminates the running thread.</p>
 </dd></dl>
 
@@ -620,31 +620,175 @@ functions perform some trivial function, and then exit. Note that the
 functions should not and do not return.</p>
 <div class="highlight-none"><div class="highlight"><pre>void f1() {
     chan_out_int(c1, 123);
-    thread_exit();
+    athread_exit();
 }
 
 void f2() {
     chan_out_int(c3, 1234);
-    thread_exit();
+    athread_exit();
 }
 </pre></div>
 </div>
-<p>Finally to start the thread we call <tt class="docutils literal"><span class="pre">thread_init()</span></tt> twice. Prior to that
+<p>Finally to start the thread we call <tt class="docutils literal"><span class="pre">athread_init()</span></tt> twice. Prior to that
 we initialise the channels, so that we can communicate with the threads
 that have been created.</p>
-<div class="highlight-none"><div class="highlight"><pre>void thread_test() {
-    thread_t t1, t2;
+<div class="highlight-none"><div class="highlight"><pre>void athread_test() {
+    athread_t t1, t2;
     unsigned int s1[100], s2[100];
     int i;
 
     chan_init(c1, c2);
     chan_init(c3, c4);
-    thread_init(t1, s1, 100, f1);
-    thread_init(t2, s2, 100, f2);
+    athread_init(t1, s1, 100, f1);
+    athread_init(t2, s2, 100, f2);
     chan_in_int(c2, i);
     chan_in_int(c4, i);
     chan_exit(c1, c2);
     chan_exit(c3, c4);
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="synchronous-threads">
+<h2>Synchronous Threads<a class="headerlink" href="#synchronous-threads" title="Permalink to this headline">¶</a></h2>
+<p>This module supports synchronous threads, that is, threads that start and
+join synchronously. To this end, a <em>synchroniser</em> resource is used that
+describes a group of threads.</p>
+<p>To use synchronous XCore threads from C, include the file <tt class="docutils literal"><span class="pre">sthread.h</span></tt>.</p>
+<div class="section" id="id9">
+<h3>Types<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="sthread_t">
+<tt class="descname">sthread_t</tt><a class="headerlink" href="#sthread_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type that denotes a synchronous thread.</p>
+<p>Variables of this type should be initalised using <a class="reference internal" href="#sthread_init" title="sthread_init"><span>sthread_init()</span></a>. Running synchronous threads should terminate themselves using <a class="reference internal" href="#sthread_exit" title="sthread_exit"><span>sthread_exit()</span></a>.</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="sthread_sync_t">
+<tt class="descname">sthread_sync_t</tt><a class="headerlink" href="#sthread_sync_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type that denotes a synchroniser that is used for a group of threads.</p>
+<p>Variables of this type should be initalised using <tt class="xref c c-func docutils literal"><span class="pre">sthread_init_sync()</span></tt> and be deinitialised using <tt class="xref c c-func docutils literal"><span class="pre">sthread_sync_exit()</span></tt>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id10">
+<h3>API<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="sthread_sync_init">
+void <tt class="descname">sthread_sync_init</tt><big>(</big><a class="reference internal" href="#sthread_sync_t" title="sthread_sync_t"><span>sthread_sync_t</span></a><em>&nbsp;s</em><big>)</big><a class="headerlink" href="#sthread_sync_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that allocates a synchroniser, which is needed to make a group of synchronous threads.</p>
+<p>This synchroniser is deallocated upon calling but instead call <a class="reference internal" href="#sthread_join" title="sthread_join"><span>sthread_join()</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>s</strong> &#8211; synchroniser to be created.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sthread_init">
+void <tt class="descname">sthread_init</tt><big>(</big><a class="reference internal" href="#sthread_t" title="sthread_t"><span>sthread_t</span></a><em>&nbsp;t</em>, <a class="reference internal" href="#sthread_sync_t" title="sthread_sync_t"><span>sthread_sync_t</span></a><em>&nbsp;s</em>, unsigned int<em>&nbsp;*stack</em>, unsigned<em>&nbsp;num_stack_words</em>, void(*pc)()<big>)</big><a class="headerlink" href="#sthread_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that allocates a synchronous thread.</p>
+<p>The thread has to be provided with a stack and a function to execute. When the thread is finished, the thread should call <a class="reference internal" href="#sthread_exit" title="sthread_exit"><span>sthread_exit()</span></a>. If a function is passed as the <tt class="docutils literal"><span class="pre">pc</span></tt> argument, then this function should never return, but instead call <a class="reference internal" href="#sthread_exit" title="sthread_exit"><span>sthread_exit()</span></a>.</p>
+<p>Note that all threads belnging to a synchroniser shoudl be created first, prior to starting them using <a class="reference internal" href="#sthread_start" title="sthread_start"><span>sthread_start()</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> &#8211; thread to be created.</li>
+<li><strong>s</strong> &#8211; synchroniser that this thread belongs to.</li>
+<li><strong>stack</strong> &#8211; pointer to a block of memory where the thread&#8217;s stack can be created.</li>
+<li><strong>num_stack_words</strong> &#8211; size of the block of memory reserved for the stack in words.</li>
+<li><strong>pc</strong> &#8211; code to execute (a void function)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sthread_start">
+void <tt class="descname">sthread_start</tt><big>(</big><a class="reference internal" href="#sthread_sync_t" title="sthread_sync_t"><span>sthread_sync_t</span></a><em>&nbsp;s</em><big>)</big><a class="headerlink" href="#sthread_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that starts a group of synchronous threads.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>s</strong> &#8211; syncrhoniser whose threads should start.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sthread_exit">
+void <tt class="descname">sthread_exit</tt><big>(</big>void<big>)</big><a class="headerlink" href="#sthread_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that exits a synchronous thread.</p>
+<p>Statements after this macro are unreachable, since it terminates the running thread.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sthread_join">
+void <tt class="descname">sthread_join</tt><big>(</big><a class="reference internal" href="#sthread_sync_t" title="sthread_sync_t"><span>sthread_sync_t</span></a><em>&nbsp;s</em><big>)</big><a class="headerlink" href="#sthread_join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that joins a group of synchronous threads.</p>
+<p>This frees the synchroniser and all threads.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>s</strong> &#8211; syncrhoniser whose threads should join.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id11">
+<h3>Example thread usage<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>An example of using threads is shown below. First, the syncrhoniser is
+initialised. This enables the programmer to allocate a group of threads
+using subsequent calls to <tt class="docutils literal"><span class="pre">sthread_init()</span></tt>. When all threads are
+allocated, they are started; in this case three threads will execute
+concurrently: <tt class="docutils literal"><span class="pre">f3()</span></tt>, <tt class="docutils literal"><span class="pre">f4()</span></tt>, and the code in <tt class="docutils literal"><span class="pre">sthread_test()</span></tt>. The
+two functions terminate by means of an <tt class="docutils literal"><span class="pre">sthread_exit()</span></tt>, and the main
+thread joins all three by means of an <tt class="docutils literal"><span class="pre">sthread_join()</span></tt>.</p>
+<div class="highlight-none"><div class="highlight"><pre>void f3() {
+    printstr(&quot;World\n&quot;);
+    sthread_exit();
+}
+
+void f4() {
+    printstr(&quot;Hello\n&quot;);
+    sthread_exit();
+}
+
+void sthread_test() {
+    sthread_t t1, t2;
+    sthread_sync_t s;
+    unsigned int s1[100], s2[100];
+
+    sthread_sync_init(s);
+    sthread_init(t1, s, s1, 100, f3);
+    sthread_init(t2, s, s2, 100, f4);
+    sthread_start(s);
+    printstr(&quot;!!\n&quot;);
+    sthread_join(s);
 }
 </pre></div>
 </div>
@@ -680,10 +824,16 @@ that have been created.</p>
 <li class="toctree-l3"><a class="reference internal" href="#id6">Example</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#threads">Threads</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#asynchronous-threads">Asynchronous Threads</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id7">Types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id8">API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example-thread-usage">Example thread usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#synchronous-threads">Synchronous Threads</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Example thread usage</a></li>
 </ul>
 </li>
 </ul>
