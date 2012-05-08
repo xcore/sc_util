@@ -57,43 +57,598 @@ document.getElementById('d1').style.height=h2 + "px";
             
   <div class="section" id="c-xcore-resources">
 <h1>C XCore Resources<a class="headerlink" href="#c-xcore-resources" title="Permalink to this headline">¶</a></h1>
+<p>The module c_xcore_resources is intended to provide low level access to all
+XCore features from C. This library is intended to ease porting of legacy
+software. Note that since C is not resource aware, the compiler cannot
+analyse and optimise resource access to the same depth as the XC compiler.</p>
 <div class="section" id="timers">
 <h2>Timers<a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h2>
+<p>To use xcore timers from C, include the file <tt class="docutils literal"><span class="pre">timer.h</span></tt>.</p>
+<div class="section" id="types">
+<h3>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="timer_t">
+<tt class="descname">timer_t</tt><a class="headerlink" href="#timer_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type that denotes a timer.</p>
+<p>Variables of this type should be initalised using <a class="reference internal" href="#timer_init" title="timer_init"><span>timer_init()</span></a>, and deinitialised using <a class="reference internal" href="#timer_exit" title="timer_exit"><span>timer_exit()</span></a>.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="api">
 <h3>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function &#8220;timer_init&#8221; in doxygen xml output</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function &#8220;timer_exit&#8221; in doxygen xml output</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function &#8220;timer_in&#8221; in doxygen xml output</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function &#8220;timer_in_when_timerafter&#8221; in doxygen xml output</p>
-</div>
+<dl class="function">
+<dt id="timer_init">
+void <tt class="descname">timer_init</tt><big>(</big><a class="reference internal" href="#timer_t" title="timer_t"><span>timer_t</span></a><em>&nbsp;t</em><big>)</big><a class="headerlink" href="#timer_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that allocates and initialises a timer.</p>
+<p>This macro is to be called once on every variable of the type <tt class="docutils literal"><span class="pre">timer_t</span></tt>. If there are no timers availble, then <tt class="docutils literal"><span class="pre">t</span></tt> will be set to NULL. When the timer is no longer required, <a class="reference internal" href="#timer_exit" title="timer_exit"><span>timer_exit()</span></a> should be called to free the timer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> &#8211; timer to be initialised</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="timer_exit">
+void <tt class="descname">timer_exit</tt><big>(</big><a class="reference internal" href="#timer_t" title="timer_t"><span>timer_t</span></a><em>&nbsp;t</em><big>)</big><a class="headerlink" href="#timer_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that deallocates and initialises a timer.</p>
+<p>This macro is to be called once on every variable of the type <tt class="docutils literal"><span class="pre">timer_t</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> &#8211; timer to be freed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="timer_in">
+void <tt class="descname">timer_in</tt><big>(</big><a class="reference internal" href="#timer_t" title="timer_t"><span>timer_t</span></a><em>&nbsp;t</em>, int<em>&nbsp;time</em><big>)</big><a class="headerlink" href="#timer_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that inputs the current time from the timer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> &#8211; timer on which to input</li>
+<li><strong>time</strong> &#8211; variable in which to leave the 32-bit time.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="timer_in_when_timerafter">
+void <tt class="descname">timer_in_when_timerafter</tt><big>(</big><a class="reference internal" href="#timer_t" title="timer_t"><span>timer_t</span></a><em>&nbsp;t</em>, int<em>&nbsp;time</em>, int<em>&nbsp;after_time</em><big>)</big><a class="headerlink" href="#timer_in_when_timerafter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that inputs the current time from the timer, but only after a specified time has been reached.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> &#8211; timer on which to input</li>
+<li><strong>time</strong> &#8211; variable in which to leave the 32-bit time.</li>
+<li><strong>after_time</strong> &#8211; time for which to wait</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<p>An example program is shown below:</p>
-<div class="highlight-none"><div class="highlight"><pre>TBC.
+<p>Example code that uses timers is shown below. A timer is declared, and
+initialised. After that, the timer value is input, whereupon the code waits
+for 100 reference clock ticks.</p>
+<div class="highlight-none"><div class="highlight"><pre>void timertest() {
+    timer_t tmr;
+    int v;
+
+    timer_init(tmr);
+    timer_in(tmr, v);           // input current time value
+    v += 100;      // add 100 = 1us as ref clock is 100 MHz
+    timer_in_when_timerafter(tmr, v, v);  // wait for v+100
+    timer_exit(tmr);
+}
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="ports">
-<h2>Ports<a class="headerlink" href="#ports" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="channels">
 <h2>Channels<a class="headerlink" href="#channels" title="Permalink to this headline">¶</a></h2>
+<p>There are two types of channels: streaming channels and normal channels.
+The latter are safe and synchronised; the former are not sychronised and
+keep a route through the switches open.</p>
+<p>To use xcore channels from C, include the file <tt class="docutils literal"><span class="pre">chan.h</span></tt>.</p>
+<div class="section" id="id1">
+<h3>Types<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="chanend_t">
+<tt class="descname">chanend_t</tt><a class="headerlink" href="#chanend_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type that denotes a channel-end.</p>
+<p>Communication channels comprise two connected channel-ends and can be created using <a class="reference internal" href="#chan_init" title="chan_init"><span>chan_init()</span></a>. Channels should be deinitialised using <a class="reference internal" href="#chan_exit" title="chan_exit"><span>chan_exit()</span></a>.</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="streaming_chanend_t">
+<tt class="descname">streaming_chanend_t</tt><a class="headerlink" href="#streaming_chanend_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type that denotes a stremaing channel-end.</p>
+<p>Streaming communication channels comprise two connected streaming channel-ends and can be created using <a class="reference internal" href="#schan_init" title="schan_init"><span>schan_init()</span></a>. Streaming channels should be deinitialised using <a class="reference internal" href="#schan_exit" title="schan_exit"><span>schan_exit()</span></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id2">
+<h3>API<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="chan_init">
+void <tt class="descname">chan_init</tt><big>(</big><a class="reference internal" href="#chanend_t" title="chanend_t"><span>chanend_t</span></a><em>&nbsp;c1</em>, <a class="reference internal" href="#chanend_t" title="chanend_t"><span>chanend_t</span></a><em>&nbsp;c2</em><big>)</big><a class="headerlink" href="#chan_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that creates a channel between a pair of channel-ends.</p>
+<p>The channel-end variables must reside on the same core.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c1</strong> &#8211; channel-end of one side</li>
+<li><strong>c2</strong> &#8211; channel-end of the other side</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="chan_exit">
+void <tt class="descname">chan_exit</tt><big>(</big><a class="reference internal" href="#chanend_t" title="chanend_t"><span>chanend_t</span></a><em>&nbsp;c1</em>, <a class="reference internal" href="#chanend_t" title="chanend_t"><span>chanend_t</span></a><em>&nbsp;c2</em><big>)</big><a class="headerlink" href="#chan_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that disconnects and deallocates a channel between a pair of channel-ends.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c1</strong> &#8211; channel-end of one side</li>
+<li><strong>c2</strong> &#8211; channel-end of the other side</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="chan_out_int">
+void <tt class="descname">chan_out_int</tt><big>(</big><a class="reference internal" href="#chanend_t" title="chanend_t"><span>chanend_t</span></a><em>&nbsp;c</em>, int<em>&nbsp;data</em><big>)</big><a class="headerlink" href="#chan_out_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that outputs an integer over a channel-end.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; the channel-end.</li>
+<li><strong>data</strong> &#8211; the integer to be output.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="chan_in_int">
+void <tt class="descname">chan_in_int</tt><big>(</big><a class="reference internal" href="#chanend_t" title="chanend_t"><span>chanend_t</span></a><em>&nbsp;c</em>, int<em>&nbsp;data</em><big>)</big><a class="headerlink" href="#chan_in_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that inputs an integer from a channel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; the channel-end.</li>
+<li><strong>data</strong> &#8211; variable in which to write the inputted integer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="schan_init">
+void <tt class="descname">schan_init</tt><big>(</big><a class="reference internal" href="#streaming_chanend_t" title="streaming_chanend_t"><span>streaming_chanend_t</span></a><em>&nbsp;c1</em>, <a class="reference internal" href="#streaming_chanend_t" title="streaming_chanend_t"><span>streaming_chanend_t</span></a><em>&nbsp;c2</em><big>)</big><a class="headerlink" href="#schan_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that creates a streaming channel between a pair of streaming channel-ends.</p>
+<p>The channel-end variables must reside on the same core.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c1</strong> &#8211; channel-end of one side</li>
+<li><strong>c2</strong> &#8211; channel-end of the other side</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="schan_exit">
+void <tt class="descname">schan_exit</tt><big>(</big><a class="reference internal" href="#streaming_chanend_t" title="streaming_chanend_t"><span>streaming_chanend_t</span></a><em>&nbsp;c1</em>, <a class="reference internal" href="#streaming_chanend_t" title="streaming_chanend_t"><span>streaming_chanend_t</span></a><em>&nbsp;c2</em><big>)</big><a class="headerlink" href="#schan_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that disconnects and deallocates a streaming channel between a pair of streaming channel-ends.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c1</strong> &#8211; channel-end of one side</li>
+<li><strong>c2</strong> &#8211; channel-end of the other side</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="schan_outct">
+void <tt class="descname">schan_outct</tt><big>(</big><a class="reference internal" href="#streaming_chanend_t" title="streaming_chanend_t"><span>streaming_chanend_t</span></a><em>&nbsp;c</em>, int<em>&nbsp;ct</em><big>)</big><a class="headerlink" href="#schan_outct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that outputs a control token onto a streaming channel-end.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; the streaming channel-end.</li>
+<li><strong>ct</strong> &#8211; control token to be output. Legal control tokens that can be used are 0 or any value in the range 3..191 inclusive.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="schan_chkct">
+void <tt class="descname">schan_chkct</tt><big>(</big><a class="reference internal" href="#streaming_chanend_t" title="streaming_chanend_t"><span>streaming_chanend_t</span></a><em>&nbsp;c</em>, int<em>&nbsp;ct</em><big>)</big><a class="headerlink" href="#schan_chkct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that checks that a specific control token is available on a streaming channel-end.</p>
+<p>This macro blocks until a token is available on th e streaming channel. If the available token is a control token and has the value <tt class="docutils literal"><span class="pre">ct</span></tt>, then the token is input and discarded. Otherwise an exception is raised.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; the streaming channel-end.</li>
+<li><strong>ct</strong> &#8211; control token that is expected on the streaming channel. If a different token arrives.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="schan_out_int">
+void <tt class="descname">schan_out_int</tt><big>(</big><a class="reference internal" href="#streaming_chanend_t" title="streaming_chanend_t"><span>streaming_chanend_t</span></a><em>&nbsp;c</em>, int<em>&nbsp;data</em><big>)</big><a class="headerlink" href="#schan_out_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that outputs an integer over a streaming channel-end.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; the streaming channel-end.</li>
+<li><strong>data</strong> &#8211; the integer to be output.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="schan_in_int">
+void <tt class="descname">schan_in_int</tt><big>(</big><a class="reference internal" href="#streaming_chanend_t" title="streaming_chanend_t"><span>streaming_chanend_t</span></a><em>&nbsp;c</em>, int<em>&nbsp;data</em><big>)</big><a class="headerlink" href="#schan_in_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that inputs an integer from a streaming channel-end.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; the streaming channel-end.</li>
+<li><strong>data</strong> &#8211; variable in which to write the inputted integer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h3>Example<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>An example program is shown in <a class="reference internal" href="#sec-api-threads"><span>Example thread usage</span></a>.</p>
+</div>
+</div>
+<div class="section" id="ports">
+<h2>Ports<a class="headerlink" href="#ports" title="Permalink to this headline">¶</a></h2>
+<p>To use xcore ports from C, include the file <tt class="docutils literal"><span class="pre">port.h</span></tt>.</p>
+<div class="section" id="id4">
+<h3>Types<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="port_t">
+<tt class="descname">port_t</tt><a class="headerlink" href="#port_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type that denotes a port.</p>
+<p>Variables of this type should be initalised using <a class="reference internal" href="#port_init" title="port_init"><span>port_init()</span></a> or <a class="reference internal" href="#port_init_buffered" title="port_init_buffered"><span>port_init_buffered()</span></a>, and deinitialised using <a class="reference internal" href="#port_exit" title="port_exit"><span>port_exit()</span></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h3>API<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="port_init">
+void <tt class="descname">port_init</tt><big>(</big><a class="reference internal" href="#port_t" title="port_t"><span>port_t</span></a><em>&nbsp;p</em>, int<em>&nbsp;port</em><big>)</big><a class="headerlink" href="#port_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that initialises a port variable to a specific port.</p>
+<p>The port should be one of XS1_PORT_1A .. XS1_PORT_32A as specified on the datasheet and in the xs1.h include file. Either this function or <a class="reference internal" href="#port_init_buffered" title="port_init_buffered"><span>port_init_buffered()</span></a> should be called once for each variable of type <tt class="docutils literal"><span class="pre">port_t</span></tt>; <a class="reference internal" href="#port_exit" title="port_exit"><span>port_exit()</span></a> should be called afterwards.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> &#8211; port variable to initialise</li>
+<li><strong>port</strong> &#8211; value that identifies which port to drive.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="port_init_buffered">
+void <tt class="descname">port_init_buffered</tt><big>(</big><a class="reference internal" href="#port_t" title="port_t"><span>port_t</span></a><em>&nbsp;p</em>, int<em>&nbsp;port</em>, int<em>&nbsp;shift_width</em><big>)</big><a class="headerlink" href="#port_init_buffered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that initialises a port variable to a specific port, and enables teh port to buffer and serialise/deserialise data.</p>
+<p>The port should be one of XS1_PORT_1A .. XS1_PORT_32A as specified on the datasheet and in the xs1.h include file. Either this function or <a class="reference internal" href="#port_init" title="port_init"><span>port_init()</span></a> should be called once for each variable of type <tt class="docutils literal"><span class="pre">port_t</span></tt>; <a class="reference internal" href="#port_exit" title="port_exit"><span>port_exit()</span></a> should be called afterwards.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> &#8211; port variable to initialise</li>
+<li><strong>port</strong> &#8211; value that identifies which port to drive.</li>
+<li><strong>shift_width</strong> &#8211; number of bits to serialise; must be 1, 2, 4, 8, or 32</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="port_exit">
+void <tt class="descname">port_exit</tt><big>(</big><a class="reference internal" href="#port_t" title="port_t"><span>port_t</span></a><em>&nbsp;p</em><big>)</big><a class="headerlink" href="#port_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that uninitialises a port variable.</p>
+<p>This function switches off the port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> &#8211; port variable to initialise</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="port_out">
+void <tt class="descname">port_out</tt><big>(</big><a class="reference internal" href="#port_t" title="port_t"><span>port_t</span></a><em>&nbsp;p</em>, int<em>&nbsp;data</em><big>)</big><a class="headerlink" href="#port_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that outputs a value onto a port.</p>
+<p>In the case of an unbuffered port, the value will be driven on the pins on the next clock cycle. In the case of a buffered port, the data will be stored in the buffer, and be serialised onto the output pins.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> &#8211; port variable that inidicates which port to output to</li>
+<li><strong>data</strong> &#8211; value to output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="port_in">
+void <tt class="descname">port_in</tt><big>(</big><a class="reference internal" href="#port_t" title="port_t"><span>port_t</span></a><em>&nbsp;p</em>, int<em>&nbsp;data</em><big>)</big><a class="headerlink" href="#port_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that inputs a value from a port.</p>
+<p>In the case of an unbuffered port, the data will be whatever is on the input pins. In the case of a buffered port, this macro will wait until the buffer is filled up with deserialised data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> &#8211; port variable that inidicates which port to input from</li>
+<li><strong>data</strong> &#8211; variable to input into</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="port_in_when_pinseq">
+void <tt class="descname">port_in_when_pinseq</tt><big>(</big><a class="reference internal" href="#port_t" title="port_t"><span>port_t</span></a><em>&nbsp;p</em>, int<em>&nbsp;data</em>, int<em>&nbsp;value</em><big>)</big><a class="headerlink" href="#port_in_when_pinseq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that inputs a value from a port conditionally; when the pins match a specific value.</p>
+<p>In the case of an unbuffered port, the data will be identical to the value. In the case of a buffered port, this macro will wait until the value appears on the pins, and then return that value and previous values deserialised into <tt class="docutils literal"><span class="pre">data</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> &#8211; port variable that inidicates which port to input from</li>
+<li><strong>data</strong> &#8211; variable to input into</li>
+<li><strong>value</strong> &#8211; conditional value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="port_in_when_pinsneq">
+void <tt class="descname">port_in_when_pinsneq</tt><big>(</big><a class="reference internal" href="#port_t" title="port_t"><span>port_t</span></a><em>&nbsp;p</em>, int<em>&nbsp;data</em>, int<em>&nbsp;value</em><big>)</big><a class="headerlink" href="#port_in_when_pinsneq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that inputs a value from a port conditionally; when the pins do not match a specific value.</p>
+<p>In the case of an unbuffered port, the data will be the non-matchine pin values. In the case of a buffered port, this macro will wait until a non matching value appears on the pins, and then return that value and previous values deserialised into <tt class="docutils literal"><span class="pre">data</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> &#8211; port variable that inidicates which port to input from</li>
+<li><strong>data</strong> &#8211; variable to input into</li>
+<li><strong>value</strong> &#8211; conditional value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id6">
+<h3>Example<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>Example code that uses ports is shown below. This piece of code uses two
+ports, <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt>. Each of the ports is initialised: <tt class="docutils literal"><span class="pre">x</span></tt> is
+initialised as <tt class="docutils literal"><span class="pre">PORT_1A</span> <span class="pre">(pin</span> <span class="pre">X0D0</span> <span class="pre">on</span> <span class="pre">an</span> <span class="pre">L1,</span> <span class="pre">see</span> <span class="pre">the</span> <span class="pre">datasheet);</span> <span class="pre">``y</span></tt> is
+initialised as a buffered port that serialises 32 bits of data, and is on
+<tt class="docutils literal"><span class="pre">PORT_1B</span></tt> (pin X0D1 on an L1). Both ports are used as output ports only,
+and the sequence high, low, high is output to port <tt class="docutils literal"><span class="pre">x</span></tt> in short succession.
+After that, 64 pulses are output onto port <tt class="docutils literal"><span class="pre">y</span></tt> (4 times 32 bits of data,
+each 32 bits comprising a sequence <tt class="docutils literal"><span class="pre">1010101..10</span></tt>).</p>
+<div class="highlight-none"><div class="highlight"><pre>void porttest() {
+    port_t x, y;
+    port_init(x, XS1_PORT_1A);
+    port_init_buffered(y, XS1_PORT_1B, 32);
+    port_out(x, 1);
+    port_out(x, 0);
+    port_out(x, 1);
+    port_out(y, 0xAAAAAAAA);
+    port_out(y, 0xAAAAAAAA);
+    port_out(y, 0xAAAAAAAA);
+    port_out(y, 0xAAAAAAAA);
+    port_exit(x);
+    port_exit(y);
+}
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="threads">
 <h2>Threads<a class="headerlink" href="#threads" title="Permalink to this headline">¶</a></h2>
+<p>This module supports asynchronous threads, that is, threads that are
+started and then run independently until they terminate themselves.</p>
+<p>To use xcore threads from C, include the file <tt class="docutils literal"><span class="pre">thread.h</span></tt>.</p>
+<div class="section" id="id7">
+<h3>Types<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="thread_t">
+<tt class="descname">thread_t</tt><a class="headerlink" href="#thread_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type that denotes a thread.</p>
+<p>Variables of this type should be initalised using <a class="reference internal" href="#thread_init" title="thread_init"><span>thread_init()</span></a>. Running threads should terminate themselves using <a class="reference internal" href="#thread_exit" title="thread_exit"><span>thread_exit()</span></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id8">
+<h3>API<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="thread_init">
+void <tt class="descname">thread_init</tt><big>(</big><a class="reference internal" href="#thread_t" title="thread_t"><span>thread_t</span></a><em>&nbsp;t</em>, unsigned int<em>&nbsp;*stack</em>, unsigned<em>&nbsp;num_stack_words</em>, void(*pc)()<big>)</big><a class="headerlink" href="#thread_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that allocates and starts an asynchronous thread.</p>
+<p>The thread has to be provided with a stack and a function to execute. When the thread is finished, the thread should call <a class="reference internal" href="#thread_exit" title="thread_exit"><span>thread_exit()</span></a>. If a function is passed as the <tt class="docutils literal"><span class="pre">pc</span></tt> argument, then this function should never return, but instead call <a class="reference internal" href="#thread_exit" title="thread_exit"><span>thread_exit()</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> &#8211; thread to be created.</li>
+<li><strong>stack</strong> &#8211; pointer to a block of memory where the thread&#8217;s stack can be created.</li>
+<li><strong>num_stack_words</strong> &#8211; size of the block of memory reserved for the stack in words.</li>
+<li><strong>pc</strong> &#8211; code to execute (a void function)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="thread_exit">
+void <tt class="descname">thread_exit</tt><big>(</big>void<big>)</big><a class="headerlink" href="#thread_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro that exits a thread.</p>
+<p>Statements after this macro are unreachable, since it terminates the running thread.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="example-thread-usage">
+<span id="sec-api-threads"></span><h3>Example thread usage<a class="headerlink" href="#example-thread-usage" title="Permalink to this headline">¶</a></h3>
+<p>An example program is shown below. We first declare some channels for
+communciation.</p>
+<div class="highlight-none"><div class="highlight"><pre>chanend_t c1, c2, c3, c4;
+</pre></div>
+</div>
+<p>Then we declare two functions that embody the threads. In this case the
+functions perform some trivial function, and then exit. Note that the
+functions should not and do not return.</p>
+<div class="highlight-none"><div class="highlight"><pre>void f1() {
+    chan_out_int(c1, 123);
+    thread_exit();
+}
+
+void f2() {
+    chan_out_int(c3, 1234);
+    thread_exit();
+}
+</pre></div>
+</div>
+<p>Finally to start the thread we call <tt class="docutils literal"><span class="pre">thread_init()</span></tt> twice. Prior to that
+we initialise the channels, so that we can communicate with the threads
+that have been created.</p>
+<div class="highlight-none"><div class="highlight"><pre>void thread_test() {
+    thread_t t1, t2;
+    unsigned int s1[100], s2[100];
+    int i;
+
+    chan_init(c1, c2);
+    chan_init(c3, c4);
+    thread_init(t1, s1, 100, f1);
+    thread_init(t2, s2, 100, f2);
+    chan_in_int(c2, i);
+    chan_in_int(c4, i);
+    chan_exit(c1, c2);
+    chan_exit(c3, c4);
+}
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -108,13 +663,29 @@ document.getElementById('d1').style.height=h2 + "px";
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">C XCore Resources</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#timers">Timers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#types">Types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#api">API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#ports">Ports</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#channels">Channels</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#threads">Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#channels">Channels</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ports">Ports</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#threads">Threads</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-thread-usage">Example thread usage</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

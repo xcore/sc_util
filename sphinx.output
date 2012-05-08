@@ -3,13 +3,36 @@ loading pickled environment... not yet created
 building [html]: targets for 2 source files that are out of date
 updating environment: 2 added, 0 changed, 0 removed
 reading sources... [ 50%] api-c-xcore-resources
+Rendering Doxygen type timer_t
+Rendering Doxygen function void timer_init
+Rendering Doxygen function void timer_exit
+Rendering Doxygen function void timer_in
+Rendering Doxygen function void timer_in_when_timerafter
+Rendering Doxygen type chanend_t
+Rendering Doxygen type streaming_chanend_t
+Rendering Doxygen function void chan_init
+Rendering Doxygen function void chan_exit
+Rendering Doxygen function void chan_out_int
+Rendering Doxygen function void chan_in_int
+Rendering Doxygen function void schan_init
+Rendering Doxygen function void schan_exit
+Rendering Doxygen function void schan_outct
+Rendering Doxygen function void schan_chkct
+Rendering Doxygen function void schan_out_int
+Rendering Doxygen function void schan_in_int
+Rendering Doxygen type port_t
+Rendering Doxygen function void port_init
+Rendering Doxygen function void port_init_buffered
+Rendering Doxygen function void port_exit
+Rendering Doxygen function void port_out
+Rendering Doxygen function void port_in
+Rendering Doxygen function void port_in_when_pinseq
+Rendering Doxygen function void port_in_when_pinsneq
+Rendering Doxygen type thread_t
+Rendering Doxygen function void thread_init
+Rendering Doxygen function void thread_exit
 reading sources... [100%] index
 
-/Users/henk/gitCommunity/sc_util/doc/api-c-xcore-resources.rst:14: WARNING: doxygenfunction: Cannot find function "timer_init" in doxygen xml output
-/Users/henk/gitCommunity/sc_util/doc/api-c-xcore-resources.rst:15: WARNING: doxygenfunction: Cannot find function "timer_exit" in doxygen xml output
-/Users/henk/gitCommunity/sc_util/doc/api-c-xcore-resources.rst:16: WARNING: doxygenfunction: Cannot find function "timer_in" in doxygen xml output
-/Users/henk/gitCommunity/sc_util/doc/api-c-xcore-resources.rst:17: WARNING: doxygenfunction: Cannot find function "timer_in_when_timerafter" in doxygen xml output
-/Users/henk/gitCommunity/sc_util/doc/index.rst:8: WARNING: toctree contains reference to nonexisting document u'summary'
 looking for now-outdated files... none found
 pickling environment... done
 checking consistency... done
@@ -21,4 +44,4 @@ writing additional files... genindex search
 copying static files... done
 dumping search index... done
 dumping object inventory... done
-build succeeded, 5 warnings.
+build succeeded.
