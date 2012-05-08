@@ -13,6 +13,16 @@ typedef unsigned int sthread_t;
  */
 typedef unsigned int sthread_sync_t;
 
+/** Macro that allocates a synchroniser, which is needed to make a group of
+ * synchronous threads. This synchroniser is deallocated upon calling but
+ * instead call sthread_join().
+ *
+ * \param s synchroniser to be created.
+ */
+void sthread_sync_init(sthread_sync_t s);
+#define sthread_sync_init(s) \
+    asm volatile("getr %0,3" : "=r" (s));
+
 /** Macro that allocates a synchronous thread. The thread has
  * to be provided with a stack and a function to execute. When the thread
  * is finished, the thread should call sthread_exit(). If a function is
@@ -34,19 +44,18 @@ typedef unsigned int sthread_sync_t;
  *
  * \param pc    code to execute (a void function)
  */
-void sthread_init(sthread_t t, sthread_type_t s, unsigned int *stack, unsigned num_stack_words, void (*pc)());
+void sthread_init(sthread_t t, sthread_sync_t s, unsigned int *stack, unsigned num_stack_words, void (*pc)());
 
 #define sthread_init(t, s, stack, num_stack_words, pc)                   \
     asm volatile("getst %0,res[%1]" : "=r" (t) : "r" (s));              \
     asm volatile("init t[%0]:sp,%1" :: "r" (t), "r" (&stack[num_stack_words-1])); \
-    asm volatile("init t[%0]:pc,%1" :: "r" (t), "r" (pc)); \
-    asm volatile("start t[%0]" :: "r" (t));
+    asm volatile("init t[%0]:pc,%1" :: "r" (t), "r" (pc));
 
 /** Macro that starts a group of synchronous threads.
  *
  * \param s syncrhoniser whose threads should start.
  */
-void sthread_start(sthread_type_t s);
+void sthread_start(sthread_sync_t s);
 
 #define sthread_start(s)    \
     asm volatile("msync res[%0]" :: "r" (s));
@@ -56,9 +65,9 @@ void sthread_start(sthread_type_t s);
  *
  * \param s syncrhoniser whose threads should join.
  */
-void sthread_join(sthread_type_t s);
+void sthread_join(sthread_sync_t s);
 
-#define sthread_start(s)    \
+#define sthread_join(s)    \
     asm volatile("mjoin res[%0]" :: "r" (s)); \
     asm volatile("freer res[%0]" :: "r" (s));
 

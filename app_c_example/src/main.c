@@ -4,6 +4,7 @@
 #include "port.h"
 #include "channel.h"
 #include "athread.h"
+#include "sthread.h"
 
 //:port main
 void porttest() {
@@ -35,42 +36,68 @@ void timertest() {
 }
 //:timer end
 
-//:thread chan
+//:sthread chan
 chanend_t c1, c2, c3, c4;
-//:thread end chan
+//:sthread end chan
 
-//:thread funcs
+//:athread funcs
 void f1() {
     chan_out_int(c1, 123);
-    thread_exit();
+    athread_exit();
 }
 
 void f2() {
     chan_out_int(c3, 1234);
-    thread_exit();
+    athread_exit();
 }
-//:thread end funcs
+//:athread end funcs
 
-//:thread main
-void thread_test() {
-    thread_t t1, t2;
+//:athread main
+void athread_test() {
+    athread_t t1, t2;
     unsigned int s1[100], s2[100];
     int i;
 
     chan_init(c1, c2);
     chan_init(c3, c4);
-    thread_init(t1, s1, 100, f1);
-    thread_init(t2, s2, 100, f2);
+    athread_init(t1, s1, 100, f1);
+    athread_init(t2, s2, 100, f2);
     chan_in_int(c2, i);
     chan_in_int(c4, i);
     chan_exit(c1, c2);
     chan_exit(c3, c4);
 }
-//:thread end main
+//:athread end main
+
+//:sthread main
+void f3() {
+    printstr("World\n");
+    sthread_exit();
+}
+
+void f4() {
+    printstr("Hello\n");
+    sthread_exit();
+}
+
+void sthread_test() {
+    sthread_t t1, t2;
+    sthread_sync_t s;
+    unsigned int s1[100], s2[100];
+
+    sthread_sync_init(s);
+    sthread_init(t1, s, s1, 100, f3);
+    sthread_init(t2, s, s2, 100, f4);
+    sthread_start(s);
+    printstr("!!\n");
+    sthread_join(s);
+}
+//:sthread end main
 
 int main(void) {
     porttest();
     timertest();
-    thread_test();
+    athread_test();
+    sthread_test();
     return 0;
 }

@@ -116,7 +116,7 @@ Asynchronous Threads
 This module supports asynchronous threads, that is, threads that are
 started and then run independently until they terminate themselves.
 
-To use xcore threads from C, include the file ``athread.h``.
+To use asynchronous XCore threads from C, include the file ``athread.h``.
 
 Types
 =====
@@ -157,4 +157,37 @@ that have been created.
 .. literalinclude:: app_c_example/src/main.c
    :start-after: //:athread main
    :end-before: //:athread end main
+
+
+Synchronous Threads
+-------------------
+
+This module supports synchronous threads, that is, threads that start and
+join synchronously. To this end, a *synchroniser* resource is used that
+describes a group of threads.
+
+To use synchronous XCore threads from C, include the file ``sthread.h``.
+
+Types
+=====
+
+.. doxygentypedef:: sthread_t
+.. doxygentypedef:: sthread_sync_t
+
+API
+===
+
+.. doxygenfunction:: sthread_sync_init
+.. doxygenfunction:: sthread_init
+.. doxygenfunction:: sthread_start
+.. doxygenfunction:: sthread_exit
+.. doxygenfunction:: sthread_join
+
+Example thread usage
+====================
+
+
+.. literalinclude:: app_c_example/src/main.c
+   :start-after: //:sthread main
+   :end-before: //:sthread end main
 
