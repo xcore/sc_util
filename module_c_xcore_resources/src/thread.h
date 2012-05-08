@@ -34,7 +34,9 @@ void thread_init(thread_t t, unsigned int *stack, unsigned num_stack_words, void
 /** Macro that exits a thread. Statements after this macro are unreachable,
  * since it terminates the running thread.
  */
-#define thread_exit() \
-    asm volatile("freet");
+void thread_exit(void);
+/** \cond */
+#define thread_exit()       asm volatile("freet");
+/** \endcond */
 
 #endif

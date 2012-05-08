@@ -9,6 +9,8 @@ analyse and optimise resource access to the same depth as the XC compiler.
 Timers
 ------
 
+To use xcore timers from C, include the file ``timer.h``.
+
 Types
 =====
 
@@ -25,10 +27,13 @@ API
 Example
 =======
 
+Example code that uses timers is shown below. A timer is declared, and
+initialised. After that, the timer value is input, whereupon the code waits
+for 100 reference clock ticks.
 
-An example program is shown below::
-
-  TBC.
+.. literalinclude:: app_c_example/src/main.c
+   :start-after: //:timer main
+   :end-before: //:timer end
 
 
 Channels
@@ -37,6 +42,8 @@ Channels
 There are two types of channels: streaming channels and normal channels.
 The latter are safe and synchronised; the former are not sychronised and
 keep a route through the switches open.
+
+To use xcore channels from C, include the file ``chan.h``.
 
 Types
 =====
@@ -61,14 +68,13 @@ API
 Example
 =======
 
-An example program is shown below::
-
-  TBC.
+An example program is shown in :ref:`sec_api_threads`.
 
 
 Ports
 -----
 
+To use xcore ports from C, include the file ``port.h``.
 
 Types
 =====
@@ -89,26 +95,66 @@ API
 Example
 =======
 
-An example program is shown below::
+Example code that uses ports is shown below. This piece of code uses two
+ports, ``x`` and ``y``. Each of the ports is initialised: ``x`` is
+initialised as ``PORT_1A (pin X0D0 on an L1, see the datasheet); ``y`` is
+initialised as a buffered port that serialises 32 bits of data, and is on
+``PORT_1B`` (pin X0D1 on an L1). Both ports are used as output ports only,
+and the sequence high, low, high is output to port ``x`` in short succession.
+After that, 64 pulses are output onto port ``y`` (4 times 32 bits of data,
+each 32 bits comprising a sequence ``1010101..10``).
 
-  TBC.
+.. literalinclude:: app_c_example/src/main.c
+   :start-after: //:port main
+   :end-before: //:port end
+
 
 
 Threads
 -------
 
+This module supports asynchronous threads, that is, threads that are
+started and then run independently until they terminate themselves.
+
+To use xcore threads from C, include the file ``thread.h``.
+
 Types
 =====
 
+.. doxygentypedef:: thread_t
 
 API
 ===
 
+.. doxygenfunction:: thread_init
 
-Example
-=======
+.. doxygenfunction:: thread_exit
 
-An example program is shown below::
+.. _sec_api_threads:
 
-  TBC.
+Example thread usage
+====================
+
+An example program is shown below. We first declare some channels for
+communciation.
+
+.. literalinclude:: app_c_example/src/main.c
+   :start-after: //:thread chan
+   :end-before: //:thread end chan
+
+Then we declare two functions that embody the threads. In this case the
+functions perform some trivial function, and then exit. Note that the
+functions should not and do not return.
+
+.. literalinclude:: app_c_example/src/main.c
+   :start-after: //:thread funcs
+   :end-before: //:thread end funcs
+
+Finally to start the thread we call ``thread_init()`` twice. Prior to that
+we initialise the channels, so that we can communicate with the threads
+that have been created.
+
+.. literalinclude:: app_c_example/src/main.c
+   :start-after: //:thread main
+   :end-before: //:thread end main
 

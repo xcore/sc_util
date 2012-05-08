@@ -5,13 +5,14 @@
 #include "channel.h"
 #include "thread.h"
 
+//:port main
 void porttest() {
     port_t x, y;
     port_init(x, XS1_PORT_1A);
     port_init_buffered(y, XS1_PORT_1B, 32);
-    port_out(x, 0xAAAAAAAA);
-    port_out(x, 0xAAAAAAAA);
-    port_out(x, 0xAAAAAAAA);
+    port_out(x, 1);
+    port_out(x, 0);
+    port_out(x, 1);
     port_out(y, 0xAAAAAAAA);
     port_out(y, 0xAAAAAAAA);
     port_out(y, 0xAAAAAAAA);
@@ -19,20 +20,26 @@ void porttest() {
     port_exit(x);
     port_exit(y);
 }
+//:port end
 
+//:timer main
 void timertest() {
-    timer_t x;
-    int t;
+    timer_t tmr;
+    int v;
 
-    timer_init(x);
-    timer_in(x, t);
-    t += 100;
-    timer_in_when_timerafter(x, t, t);
-    timer_exit(x);
+    timer_init(tmr);
+    timer_in(tmr, v);           // input current time value
+    v += 100;      // add 100 = 1us as ref clock is 100 MHz
+    timer_in_when_timerafter(tmr, v, v);  // wait for v+100
+    timer_exit(tmr);
 }
+//:timer end
 
+//:thread chan
 chanend_t c1, c2, c3, c4;
+//:thread end chan
 
+//:thread funcs
 void f1() {
     chan_out_int(c1, 123);
     thread_exit();
@@ -42,7 +49,9 @@ void f2() {
     chan_out_int(c3, 1234);
     thread_exit();
 }
+//:thread end funcs
 
+//:thread main
 void thread_test() {
     thread_t t1, t2;
     unsigned int s1[100], s2[100];
@@ -57,6 +66,7 @@ void thread_test() {
     chan_exit(c1, c2);
     chan_exit(c3, c4);
 }
+//:thread end main
 
 int main(void) {
     porttest();

@@ -12,3 +12,11 @@ doc/Doxyfile-e
 doc/_build/
 doc/.doxygen
 doc/.sources
+
+doc/index.aux
+doc/index.idx
+doc/index.log
+doc/index.out
+doc/index.pdf
+doc/index.tex
+doc/index.toc
