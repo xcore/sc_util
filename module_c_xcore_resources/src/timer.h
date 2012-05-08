@@ -44,7 +44,7 @@ void timer_in(timer_t t, int time);
  * \param time       variable in which to leave the 32-bit time.
  * \param after_time time for which to wait
  */
-void timer_in(timer_t t, int time, int after_time);
+void timer_in_when_timerafter(timer_t t, int time, int after_time);
 #define timer_in_when_timerafter(t,i,v)              \
     asm volatile("setd res[%0],%1" :: "r" (t), "r" (v)); \
     asm volatile("setc res[%0],9" :: "r" (t));       \

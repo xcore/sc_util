@@ -32,5 +32,6 @@ void timertest() {
 int main(void) {
     porttest();
     timertest();
+    fork();
     return 0;
 }

@@ -1,7 +1,7 @@
 REPO=../../sc_util
 SPHINX_PROJECT_NAME=Utilities
 VERSION=0v1
-DOXYGEN_DIRS=
+DOXYGEN_DIRS=$(REPO)/module_c_xcore_resources
 SOURCE_INCLUDE_DIRS=$(REPO)
 XDOC_DIR ?= ../../xdoc
 include $(XDOC_DIR)/Makefile.inc
