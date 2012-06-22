@@ -1,10 +1,10 @@
 #include <xs1.h>
 #include <print.h>
+#include <stddef.h>
 #include "timer.h"
 #include "port.h"
 #include "channel.h"
-#include "athread.h"
-#include "sthread.h"
+#include "thread.h"
 
 //:port main
 void porttest() {
@@ -36,68 +36,70 @@ void timertest() {
 }
 //:timer end
 
-//:sthread chan
+//:thread_group chan
 chanend_t c1, c2, c3, c4;
-//:sthread end chan
+//:thread_group end chan
 
-//:athread funcs
-void f1() {
+//:thread funcs
+void *f1(void *args) {
     chan_out_int(c1, 123);
-    athread_exit();
+    return NULL;
 }
 
-void f2() {
+void *f2(void *args) {
     chan_out_int(c3, 1234);
-    athread_exit();
+    return NULL;
 }
-//:athread end funcs
+//:thread end funcs
 
-//:athread main
-void athread_test() {
-    athread_t t1, t2;
+//:thread main
+void thread_test() {
+    thread_t t2;
     unsigned int s1[100], s2[100];
     int i;
 
     chan_init(c1, c2);
     chan_init(c3, c4);
-    athread_init(t1, s1, 100, f1);
-    athread_init(t2, s2, 100, f2);
+
+    thread_create_detached(&f1, s1, 100, NULL);
+    thread_create(&t2, &f2, s2, 100, NULL);
     chan_in_int(c2, i);
     chan_in_int(c4, i);
+    thread_join(t2);
     chan_exit(c1, c2);
     chan_exit(c3, c4);
 }
-//:athread end main
+//:thread end main
 
-//:sthread main
-void f3() {
+//:thread_group main
+void *f3(void *args) {
     printstr("World\n");
-    sthread_exit();
+    return NULL;
 }
 
-void f4() {
+void *f4(void *args) {
     printstr("Hello\n");
-    sthread_exit();
+    return NULL;
 }
 
-void sthread_test() {
-    sthread_t t1, t2;
-    sthread_sync_t s;
+void thread_group_test() {
+    thread_group_t tgroup;
+    thread_group_create(&tgroup);
+
     unsigned int s1[100], s2[100];
 
-    sthread_sync_init(s);
-    sthread_init(t1, s, s1, 100, f3);
-    sthread_init(t2, s, s2, 100, f4);
-    sthread_start(s);
+    thread_create_in_group(&f3, tgroup, s1, 100, NULL);
+    thread_create_in_group(&f4, tgroup, s2, 100, NULL);
+    thread_group_start(tgroup);
     printstr("!!\n");
-    sthread_join(s);
+    thread_group_join(tgroup);
 }
-//:sthread end main
+//:thread_group end main
 
 int main(void) {
     porttest();
     timertest();
-    athread_test();
-    sthread_test();
+    thread_test();
+    thread_group_test();
     return 0;
 }
