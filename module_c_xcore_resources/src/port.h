@@ -1,56 +1,57 @@
 #ifndef C_PORT_H
 
 #define C_PORT_H
+#include <xccompat.h>
 
-/** Type that denotes a port. Variables of this type should be initalised
- * using port_init() or port_init_buffered(), and deinitialised using
- * port_exit().
- */
-typedef unsigned int port_t;
-
-/** Macro that initialises a port variable to a specific port. The port
+/** Initialise a port variable to a specific port. The port
  * should be one of XS1_PORT_1A .. XS1_PORT_32A as specified on the
  * datasheet and in the xs1.h include file. Either this function or
  * port_init_buffered() should be called once for each variable of type
- * ``port_t``; port_exit() should be called afterwards.
+ * ``port``; port_exit() should be called afterwards.
  *
- * \param p      port variable to initialise
- * \param port   value that identifies which port to drive.
+ * \param port_id   value that identifies which port to drive.
+ * \returns         port variable representing the initialise port
  */
-void port_init(port_t p, int port);
-#define port_init(p, port) \
-    p = port; \
-    asm volatile("setc res[%0],8" :: "r" (p));
+inline port port_init(int port_id)
+{
+  port p = port_id;
+  asm volatile("setc res[%0],8" :: "r" (p));
+  return p;
+}
 
-/** Macro that initialises a port variable to a specific port, and enables
- * teh port to buffer and serialise/deserialise data. The port should be
+/** Initialise a port variable to a specific port, and enables
+ * the port to buffer and serialise/deserialise data. The port should be
  * one of XS1_PORT_1A .. XS1_PORT_32A as specified on the datasheet and in
  * the xs1.h include file. Either this function or port_init() should
- * be called once for each variable of type ``port_t``; port_exit()
+ * be called once for each variable of type ``port``; port_exit()
  * should be called afterwards.
  *
  * \param p      port variable to initialise
- * \param port   value that identifies which port to drive.
+ * \param port_id   value that identifies which port to drive.
  * \param shift_width  number of bits to serialise; must be 1, 2, 4, 8, or 32
  */
-void port_init_buffered(port_t p, int port, int shift_width);
-#define port_init_buffered(p, port, shift_width) \
-    p = port; \
-    asm volatile("setc res[%0],8" :: "r" (p)); \
-    asm volatile("setc res[%0],0x200f" :: "r" (p)); \
-    asm volatile("settw res[%0],%1" :: "r" (p), "r" (shift_width));
+inline port port_init_buffered(int port_id, int shift_width)
+{
+  port p = port_id;
+  asm volatile("setc res[%0],8" :: "r" (p));        \
+  asm volatile("setc res[%0],0x200f" :: "r" (p));                       \
+  asm volatile("settw res[%0],%1" :: "r" (p), "r" (shift_width));
+  return p;
+}
 
-/** Macro that uninitialises a port variable. This function switches off
+/** Uninitialise a port variable. This function switches off
  * the port.
  *
  * \param p      port variable to initialise
  */
-void port_exit(port_t p);
-#define port_exit(p) \
-    asm volatile("setc res[%0],0" :: "r" (p));
+inline void port_exit(port p)
+{
+  asm volatile("setc res[%0],0" :: "r" (p));
+  return;
+}
 
 
-/** Macro that outputs a value onto a port. In the case of an unbuffered
+/** Outputs a value onto a port. In the case of an unbuffered
  * port, the value will be driven on the pins on the next clock cycle. In
  * the case of a buffered port, the data will be stored in the buffer, and
  * be serialised onto the output pins.
@@ -58,52 +59,67 @@ void port_exit(port_t p);
  * \param p      port variable that inidicates which port to output to
  * \param data   value to output
  */
-void port_out(port_t p, int data);
-#define port_out(p,i) \
-    asm volatile("out res[%0],%1" :: "r" (p), "r" (i));
+inline void output_data(port p, int data)
+{
+  asm volatile("out res[%0],%1" :: "r" (p), "r" (data));
+}
 
-/** Macro that inputs a value from a port. In the case of an unbuffered
+/** Input a value from a port. In the case of an unbuffered
  * port, the data will be whatever is on the input pins. In the case of a
- * buffered port, this macro will wait until the buffer is filled up with
+ * buffered port, this function will wait until the buffer is filled up with
  * deserialised data.
  *
  * \param p      port variable that inidicates which port to input from
- * \param data   variable to input into
+ * \returns      the inputted data
  */
-void port_in(port_t p, int data);
-#define port_in(p,i) \
-    asm volatile("in %0,res[%1]" : "=r" (i): "r" (p));
+inline int input_data(port p)
+{
+  int data;
+  asm volatile("in %0,res[%1]" : "=r" (data): "r" (p));
+  return data;
+}
 
-/** Macro that inputs a value from a port conditionally; when the pins
- * match a specific value. In the case of an unbuffered port, the data will
- * be identical to the value. In the case of a buffered port, this macro
- * will wait until the value appears on the pins, and then return that
- * value and previous values deserialised into ``data``.
+/** Set a port to input or event when its pins match a specific value. This
+ *  is usually used in conjunciton with input_data() e.g.
  *
- * \param p      port variable that inidicates which port to input from
- * \param data   variable to input into
- * \param value  conditional value
+ *  \code
+ *
+ *     x = input_data(port_when_pinseq(p,1))
+ *
+ *  \endcode
+ *
+ *  In the case of an unbuffered port, the data inputted
+ *  be identical to the value. In the case of a buffered port, an input
+ *  will wait until the value appears on the pins and then return that
+ *  value and some previous values that have been deserialised.
  */
-void port_in_when_pinseq(port_t p, int data, int value);
-#define port_in_when_pinseq(p,data,value)              \
-    asm volatile("setc res[%0],0x11" :: "r" (p));       \
-    asm volatile("setd res[%0],%1" :: "r" (p), "r" (value)); \
-    asm volatile("in %0,res[%1]" : "=r" (data): "r" (p));
+inline port port_when_pinseq(port p, int value)
+{
+  asm volatile("setd res[%0],%1" :: "r" (p), "r" (value));
+  asm volatile("setc res[%0],0x11" :: "r" (p));
+  return p;
+}
 
-/** Macro that inputs a value from a port conditionally; when the pins do
- * not match a specific value. In the case of an unbuffered port, the data
- * will be the non-matchine pin values. In the case of a buffered port,
+/** Set a port to input or event when its pins do not
+ *  match a specific value. This
+ *  is usually used in conjunciton with input_data() e.g.
+ *
+ *  \code
+ *
+ *     x = input_data(port_when_pinsneq(p,1))
+ *
+ *  \endcode
+ *
+ * In the case of an unbuffered port, the inputted data
+ * will be the non-matching pin values. In the case of a buffered port,
  * this macro will wait until a non matching value appears on the pins, and
- * then return that value and previous values deserialised into ``data``.
- *
- * \param p      port variable that inidicates which port to input from
- * \param data   variable to input into
- * \param value  conditional value
+ * then return that value and previous values that have been deserialised.
  */
-void port_in_when_pinsneq(port_t p, int data, int value);
-#define port_in_when_pinsneq(p,data,value)              \
-    asm volatile("setc res[%0],0x19" :: "r" (p));       \
-    asm volatile("setd res[%0],%1" :: "r" (p), "r" (value)); \
-    asm volatile("in %0,res[%1]" : "=r" (data): "r" (p));
+inline port port_when_pinsneq(port p, int value)
+{
+  asm volatile("setd res[%0],%1" :: "r" (p), "r" (value));
+  asm volatile("setc res[%0],0x19" :: "r" (p));
+  return p;
+}
 
 #endif

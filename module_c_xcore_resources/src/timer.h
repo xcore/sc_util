@@ -1,53 +1,92 @@
 #ifndef C_TIMER_H
 
 #define C_TIMER_H
+#include <xccompat.h>
 
-/** Type that denotes a timer. Variables of this type should be initalised
- * using timer_init(), and deinitialised using timer_exit().
- */
-typedef unsigned int timer_t;
 
-/** Macro that allocates and initialises a timer. This macro is to be
- * called once on every variable of the type ``timer_t``. If there are no timers availble, then ``t`` will be set to NULL.
+/** Allocates and initialise a timer. This macro is to be
+ * called once on every variable of the type ``timer``.
+ * If there are no timers availble, then the function will return NULL.
  * When the timer is no longer required, timer_exit() should be called
  * to free the timer.
  *
- * \param t timer to be initialised
+ * \returns the initialized timer
  */
-void timer_init(timer_t t);
-#define timer_init(t) \
-    asm volatile("getr %0,1" : "=r" (t));
+inline timer timer_init(void)
+{
+  timer t;
+  asm volatile("getr %0,1" : "=r" (t));
+  return t;
+}
 
 
-/** Macro that deallocates and initialises a timer. This macro is to be
- * called once on every variable of the type ``timer_t``.
+/** Deallocate a timer. This function is to be
+ * called once on every variable of the type ``timer``.
  *
  * \param t timer to be freed
  */
-void timer_exit(timer_t t);
-#define timer_exit(t) \
-    asm volatile("freer res[%0]" :: "r" (t));
+inline void timer_exit(timer t)
+{
+  asm volatile("freer res[%0]" :: "r" (t));
+}
 
-/** Macro that inputs the current time from the timer. 
+/** Get the current time from the timer.
  *
  * \param t    timer on which to input
- * \param time variable in which to leave the 32-bit time.
+ * \returns    the 32-bit time.
  */
-void timer_in(timer_t t, int time);
-#define timer_in(t, i)                            \
-    asm volatile("in %0,res[%1]" : "=r" (i): "r" (t));
+inline int get_time(timer t)
+{
+  int i;
+  asm volatile("in %0,res[%1]" : "=r" (i): "r" (t));
+  return i;
+}
 
-/** Macro that inputs the current time from the timer, but only after a
- * specified time has been reached.
+
+/** Set a timer to only input after a specified time.
+ *  This is usually used in cojunction with select() e.g.
  *
- * \param t          timer on which to input
- * \param time       variable in which to leave the 32-bit time.
- * \param after_time time for which to wait
+ *  \code
+ *
+ *    select(c, timer_when_timerafter(tmr, time));
+ *
+ *  \endcode
+ *
+ *  \param   timer   the time after which the timer can event/input
+ *  \returns         the timer with the condition set
+ *
  */
-void timer_in_when_timerafter(timer_t t, int time, int after_time);
-#define timer_in_when_timerafter(t,i,v)              \
-    asm volatile("setd res[%0],%1" :: "r" (t), "r" (v)); \
-    asm volatile("setc res[%0],9" :: "r" (t));       \
-    asm volatile("in %0,res[%1]" : "=r" (i): "r" (t));
+inline timer timer_when_timerafter(timer tmr, int time)
+{
+  asm volatile("setd res[%0],%1" :: "r" (tmr), "r" (time));
+  asm volatile("setc res[%0],9" :: "r" (tmr));
+  return tmr;
+}
+
+/** Pause until after a specified time
+ *
+ *  \input tmr  the timer to use for timing
+ *  \input time the time to wait until
+ */
+inline void wait_until(timer tmr, int time)
+{
+  (void) get_time(timer_when_timerafter(tmr, time));
+}
+
+/** Delay for a specified time. This function pauses until the time is
+ *  reached.
+ *
+ *  \input period    The amount of time to wait (in reference time ticks,
+ *                   usually 10ns steps)
+ */
+inline void delay(int period)
+{
+  timer tmr = timer_init();
+  int time;
+  time = get_time(tmr);
+  time += period;
+  wait_until(tmr, time);
+  timer_exit(tmr);
+}
 
 #endif

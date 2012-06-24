@@ -1,23 +1,20 @@
 #include <xs1.h>
 #include <print.h>
-#include "timer.h"
-#include "port.h"
-#include "channel.h"
-#include "athread.h"
-#include "sthread.h"
+#include "cxc.h"
 
 //:port main
 void porttest() {
-    port_t x, y;
-    port_init(x, XS1_PORT_1A);
-    port_init_buffered(y, XS1_PORT_1B, 32);
-    port_out(x, 1);
-    port_out(x, 0);
-    port_out(x, 1);
-    port_out(y, 0xAAAAAAAA);
-    port_out(y, 0xAAAAAAAA);
-    port_out(y, 0xAAAAAAAA);
-    port_out(y, 0xAAAAAAAA);
+    port x, y;
+    x = port_init(XS1_PORT_1A);
+    y = port_init_buffered(XS1_PORT_1B, 32);
+    output_data(x, 1);
+    output_data(x, 0);
+    output_data(x, 1);
+    output_data(x, 0);
+    output_data(y, 0xAAAAAAAA);
+    output_data(y, 0xAAAAAAAA);
+    output_data(y, 0xAAAAAAAA);
+    output_data(y, 0xAAAAAAAA);
     port_exit(x);
     port_exit(y);
 }
@@ -25,29 +22,28 @@ void porttest() {
 
 //:timer main
 void timertest() {
-    timer_t tmr;
+    timer tmr;
     int v;
-
-    timer_init(tmr);
-    timer_in(tmr, v);           // input current time value
-    v += 100;      // add 100 = 1us as ref clock is 100 MHz
-    timer_in_when_timerafter(tmr, v, v);  // wait for v+100
+    tmr = timer_init();
+    v = get_time(tmr);  // input current time value
+    v += 100;           // add 100 = 1us as ref clock is 100 MHz
+    wait_until(tmr, v);
     timer_exit(tmr);
 }
 //:timer end
 
 //:sthread chan
-chanend_t c1, c2, c3, c4;
+chanend c1, c2, c3, c4;
 //:sthread end chan
 
 //:athread funcs
 void f1() {
-    chan_out_int(c1, 123);
+    send_word(c1, 123);
     athread_exit();
 }
 
 void f2() {
-    chan_out_int(c3, 1234);
+    send_word(c3, 1234);
     athread_exit();
 }
 //:athread end funcs
@@ -58,12 +54,12 @@ void athread_test() {
     unsigned int s1[100], s2[100];
     int i;
 
-    chan_init(c1, c2);
-    chan_init(c3, c4);
+    chan_init(&c1, &c2);
+    chan_init(&c3, &c4);
     athread_init(t1, s1, 100, f1);
     athread_init(t2, s2, 100, f2);
-    chan_in_int(c2, i);
-    chan_in_int(c4, i);
+    i = receive_word(c2);
+    i = receive_word(c4);
     chan_exit(c1, c2);
     chan_exit(c3, c4);
 }
@@ -93,6 +89,10 @@ void sthread_test() {
     sthread_join(s);
 }
 //:sthread end main
+
+void select_test() {
+  select(1,2,3);
+}
 
 int main(void) {
     porttest();
