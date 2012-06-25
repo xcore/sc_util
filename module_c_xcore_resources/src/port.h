@@ -122,4 +122,35 @@ inline port port_when_pinsneq(port p, int value)
   return p;
 }
 
+/** Set a port to input or event when its port counter matches a
+ *  specific value. This
+ *  is usually used in conjunciton with input_data() e.g.
+ *
+ *  \code
+ *
+ *     x = input_data(port_when_at_time(p,t))
+ *
+ *  \endcode
+ *
+ */
+inline port port_when_at_time(port p, int value)
+{
+  asm volatile("setpt res[%0],%1" :: "r" (p), "r" (value));
+  return p;
+}
+
+
+inline void clear_port_condition(port p)
+{
+  asm volatile("setc res[%0],0x1" :: "r" (p));
+}
+
+inline void clear_port_time_condition(port p)
+{
+  asm volatile("clrpt res[%0]" :: "r" (p));
+}
+
+
+
+
 #endif
