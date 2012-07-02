@@ -1,10 +1,10 @@
 #include <xs1.h>
 #include <print.h>
+#include <stddef.h>
 #include "timer.h"
 #include "port.h"
 #include "channel.h"
-#include "athread.h"
-#include "sthread.h"
+#include "thread.h"
 
 //:port main
 void porttest() {
@@ -36,68 +36,80 @@ void timertest() {
 }
 //:timer end
 
-//:sthread chan
-chanend_t c1, c2, c3, c4;
-//:sthread end chan
+//:thread main
+void *input_thread(void *);
 
-//:athread funcs
-void f1() {
-    chan_out_int(c1, 123);
-    athread_exit();
-}
-
-void f2() {
-    chan_out_int(c3, 1234);
-    athread_exit();
-}
-//:athread end funcs
-
-//:athread main
-void athread_test() {
-    athread_t t1, t2;
-    unsigned int s1[100], s2[100];
-    int i;
-
+void thread_test() {
+    thread_t t;
+    unsigned int s[100];
+    chanend_t c1, c2;
     chan_init(c1, c2);
-    chan_init(c3, c4);
-    athread_init(t1, s1, 100, f1);
-    athread_init(t2, s2, 100, f2);
-    chan_in_int(c2, i);
-    chan_in_int(c4, i);
+
+    thread_create(&t, &input_thread, s, 100, &c2);
+    chan_out_int(c1, 123);
+    thread_join(t);
     chan_exit(c1, c2);
-    chan_exit(c3, c4);
-}
-//:athread end main
-
-//:sthread main
-void f3() {
-    printstr("World\n");
-    sthread_exit();
 }
 
-void f4() {
-    printstr("Hello\n");
-    sthread_exit();
+void *input_thread(void *args) {
+    int result;
+    chanend_t c = *(chanend_t*)args;
+    chan_in_int(c, result);
+    return NULL;
 }
+//:thread end main
 
-void sthread_test() {
-    sthread_t t1, t2;
-    sthread_sync_t s;
+//:thread_detached main
+void thread_detached_test() {
+    unsigned int s[100];
+    chanend_t c1, c2;
+    chan_init(c1, c2);
+
+    thread_create_detached(&input_thread, s, 100, &c2);
+    chan_out_int(c1, 123);
+    chan_exit(c1, c2);
+}
+//:thread_detached end main
+
+//:thread_group main
+void *world_thread(void *args);
+void *hello_thread(void *args);
+
+void thread_group_test() {
+    thread_group_t tgroup;
+    thread_group_create(&tgroup);
+
     unsigned int s1[100], s2[100];
 
-    sthread_sync_init(s);
-    sthread_init(t1, s, s1, 100, f3);
-    sthread_init(t2, s, s2, 100, f4);
-    sthread_start(s);
-    printstr("!!\n");
-    sthread_join(s);
+    thread_create_in_group(&world_thread, tgroup, s1, 100, NULL);
+    thread_create_in_group(&hello_thread, tgroup, s2, 100, NULL);
+    thread_group_start(tgroup);
+    thread_group_sync(tgroup);
+    thread_group_sync(tgroup);
+    printstr("!\n");
+    thread_group_join(tgroup);
 }
-//:sthread end main
+
+void *world_thread(void *args) {
+    thread_sync();
+    printstr("World");
+    thread_sync();
+    return NULL;
+}
+
+void *hello_thread(void *args) {
+    printstr("Hello ");
+    thread_sync();
+    thread_sync();
+    return NULL;
+}
+//:thread_group end main
 
 int main(void) {
     porttest();
     timertest();
-    athread_test();
-    sthread_test();
+    thread_test();
+    thread_detached_test();
+    thread_group_test();
     return 0;
 }
