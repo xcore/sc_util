@@ -6,7 +6,7 @@
 #define THREADB_PERIOD 30000
 
 void threadA(chanend c) {
-  timer tmr;1
+  timer tmr;
   int t;
   mutual_comm_state_t mstate;
   int is_response_to_notification;
