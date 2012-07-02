@@ -108,93 +108,51 @@ each 32 bits comprising a sequence ``1010101..10``).
    :start-after: //:port main
    :end-before: //:port end
 
+Threads
+-------
 
-
-Asynchronous Threads
---------------------
-
-This module supports asynchronous threads, that is, threads that are
-started and then run independently until they terminate themselves.
-
-To use asynchronous XCore threads from C, include the file ``athread.h``.
+To use threads from C, include the file ``thread.h``.
 
 Types
 =====
 
-.. doxygentypedef:: athread_t
+.. doxygentypedef:: thread_t
+.. doxygentypedef:: thread_group_t
 
 API
 ===
 
-.. doxygenfunction:: athread_init
-
-.. doxygenfunction:: athread_exit
+.. doxygenfunction:: thread_create
+.. doxygenfunction:: thread_create_detached
+.. doxygenfunction:: thread_join
+.. doxygenfunction:: thread_exit
+.. doxygenfunction:: thread_group_create
+.. doxygenfunction:: thread_create_in_group
+.. doxygenfunction:: thread_group_start
+.. doxygenfunction:: thread_sync
+.. doxygenfunction:: thread_group_sync
+.. doxygenfunction:: thread_group_join
 
 .. _sec_api_threads:
 
 Example thread usage
 ====================
 
-An example program is shown below. We first declare some channels for
-communciation.
+Example code that uses threads is shown below. First a channel is created.
+A new thread is created that takes one end of the channel as an argument.
+The new thread communciates over the channel. Finally the parent thread waits
+for the new thread terminate and then frees the channel.
 
 .. literalinclude:: app_c_example/src/main.c
-   :start-after: //:athread chan
-   :end-before: //:athread end chan
+   :start-after: //:thread main
+   :end-before: //:thread end main
 
-Then we declare two functions that embody the threads. In this case the
-functions perform some trivial function, and then exit. Note that the
-functions should not and do not return.
-
-.. literalinclude:: app_c_example/src/main.c
-   :start-after: //:athread funcs
-   :end-before: //:athread end funcs
-
-Finally to start the thread we call ``athread_init()`` twice. Prior to that
-we initialise the channels, so that we can communicate with the threads
-that have been created.
+Example code which uses thread groups is shown below. Here a thread group is
+created and two threads are created in that thread group. When started the two
+threads print strings using the printstr() function. The threads synchronize
+using thread_sync() and thread_group_sync() to ensure the strings are printed
+in the correct order.
 
 .. literalinclude:: app_c_example/src/main.c
-   :start-after: //:athread main
-   :end-before: //:athread end main
-
-
-Synchronous Threads
--------------------
-
-This module supports synchronous threads, that is, threads that start and
-join synchronously. To this end, a *synchroniser* resource is used that
-describes a group of threads.
-
-To use synchronous XCore threads from C, include the file ``sthread.h``.
-
-Types
-=====
-
-.. doxygentypedef:: sthread_t
-.. doxygentypedef:: sthread_sync_t
-
-API
-===
-
-.. doxygenfunction:: sthread_sync_init
-.. doxygenfunction:: sthread_init
-.. doxygenfunction:: sthread_start
-.. doxygenfunction:: sthread_exit
-.. doxygenfunction:: sthread_join
-
-Example thread usage
-====================
-
-An example of using threads is shown below. First, the syncrhoniser is
-initialised. This enables the programmer to allocate a group of threads
-using subsequent calls to ``sthread_init()``. When all threads are
-allocated, they are started; in this case three threads will execute
-concurrently: ``f3()``, ``f4()``, and the code in ``sthread_test()``. The
-two functions terminate by means of an ``sthread_exit()``, and the main
-thread joins all three by means of an ``sthread_join()``.
-
-.. literalinclude:: app_c_example/src/main.c
-   :start-after: //:sthread main
-   :end-before: //:sthread end main
-
+   :start-after: //:thread_group main
+   :end-before: //:thread_group end main
