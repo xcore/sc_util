@@ -36,51 +36,44 @@ void timertest() {
 }
 //:timer end
 
-//:thread_group chan
-chanend_t c1, c2, c3, c4;
-//:thread_group end chan
-
-//:thread funcs
-void *f1(void *args) {
-    chan_out_int(c1, 123);
-    return NULL;
-}
-
-void *f2(void *args) {
-    chan_out_int(c3, 1234);
-    return NULL;
-}
-//:thread end funcs
-
 //:thread main
+void *input_thread(void *);
+
 void thread_test() {
-    thread_t t2;
-    unsigned int s1[100], s2[100];
-    int i;
-
+    thread_t t;
+    unsigned int s[100];
+    chanend_t c1, c2;
     chan_init(c1, c2);
-    chan_init(c3, c4);
 
-    thread_create_detached(&f1, s1, 100, NULL);
-    thread_create(&t2, &f2, s2, 100, NULL);
-    chan_in_int(c2, i);
-    chan_in_int(c4, i);
-    thread_join(t2);
+    thread_create(&t, &input_thread, s, 100, &c2);
+    chan_out_int(c1, 123);
+    thread_join(t);
     chan_exit(c1, c2);
-    chan_exit(c3, c4);
+}
+
+void *input_thread(void *args) {
+    int result;
+    chanend_t c = *(chanend_t*)args;
+    chan_in_int(c, result);
+    return NULL;
 }
 //:thread end main
 
-//:thread_group main
-void *f3(void *args) {
-    printstr("World\n");
-    return NULL;
-}
+//:thread_detached main
+void thread_detached_test() {
+    unsigned int s[100];
+    chanend_t c1, c2;
+    chan_init(c1, c2);
 
-void *f4(void *args) {
-    printstr("Hello\n");
-    return NULL;
+    thread_create_detached(&input_thread, s, 100, &c2);
+    chan_out_int(c1, 123);
+    chan_exit(c1, c2);
 }
+//:thread_detached end main
+
+//:thread_group main
+void *world_thread(void *args);
+void *hello_thread(void *args);
 
 void thread_group_test() {
     thread_group_t tgroup;
@@ -88,11 +81,27 @@ void thread_group_test() {
 
     unsigned int s1[100], s2[100];
 
-    thread_create_in_group(&f3, tgroup, s1, 100, NULL);
-    thread_create_in_group(&f4, tgroup, s2, 100, NULL);
+    thread_create_in_group(&world_thread, tgroup, s1, 100, NULL);
+    thread_create_in_group(&hello_thread, tgroup, s2, 100, NULL);
     thread_group_start(tgroup);
-    printstr("!!\n");
+    thread_group_sync(tgroup);
+    thread_group_sync(tgroup);
+    printstr("!\n");
     thread_group_join(tgroup);
+}
+
+void *world_thread(void *args) {
+    thread_sync();
+    printstr("World");
+    thread_sync();
+    return NULL;
+}
+
+void *hello_thread(void *args) {
+    printstr("Hello ");
+    thread_sync();
+    thread_sync();
+    return NULL;
 }
 //:thread_group end main
 
@@ -100,6 +109,7 @@ int main(void) {
     porttest();
     timertest();
     thread_test();
+    thread_detached_test();
     thread_group_test();
     return 0;
 }

@@ -1,10 +1,20 @@
 #ifndef THREAD_H_
 #define THREAD_H_
 
+/**
+ * A type that denotes a thread created by thread_create(). Use thread_join()
+ * to wait for the thread to terminate.
+ */
 typedef unsigned thread_t;
+
+/**
+ * A type that denotes a group of threads. Use thread_group_create() to create
+ * a new thread group and use thread_group_join() to wait until all the threads
+ * have terminated.
+ */
 typedef unsigned thread_group_t;
 
-#ifndef __XC__
+#if !defined(__XC__) || defined(__DOXYGEN__)
 
 /**
  * thread_create() allocates and starts a new thread. The thread executes
@@ -19,12 +29,12 @@ typedef unsigned thread_group_t;
             synchronizer is stored to this argument.
  * \param start_routine The function to execute on the thread.
  * \param stack Pointer to a block of memory that is used for the new thread's stack.
- * \param num_stack_words Size of the \a stack argument in words.
- * \param args The argument to pass to \a start_routine.
+ * \param stackspace Size of the \a stack argument in words.
+ * \param arg The argument to pass to \a start_routine.
  * \return 0 on success, non zero on failure.
  */
 int thread_create(thread_t *t, void *(*start_routine)(void *), void *stack,
-                  unsigned num_stack_words, void *arg);
+                  unsigned stackspace, void *arg);
 
 /**
  * thread_create_detached() allocates and starts a new thread. The thread
@@ -37,8 +47,8 @@ int thread_create(thread_t *t, void *(*start_routine)(void *), void *stack,
  *
  * \param start_routine The function to execute on the thread.
  * \param stack Pointer to a block of memory that is used for the new thread's stack.
- * \param num_stack_words Size of the \a stack argument in words.
- * \param args The argument to pass to \a start_routine.
+ * \param stackspace Size of the \a stack argument in words.
+ * \param arg The argument to pass to \a start_routine.
  * \return 0 on success, non zero on failure.
  */
 int thread_create_detached(void *(*start_routine)(void *), void *stack,
@@ -75,8 +85,8 @@ void thread_exit(void *value) __attribute__((noreturn));
  * thread_group_join() must be called to reclaim the resources used to create
  * the thread group.
  *
- * \param t On successful creation of the thread group the ID of the thread
-            group's synchronizer is stored to this argument.
+ * \param group On successful creation of the thread group the ID of the thread
+                group's synchronizer is stored to this argument.
  * \return 0 on success, non zero on failure.
  */
 int thread_group_create(thread_group_t *group);
@@ -94,15 +104,16 @@ int thread_group_create(thread_group_t *group);
  * \param group The thread group for the thread.
  * \param stack Pointer to a block of memory that is used for the new thread's
                 stack.
- * \param num_stack_words Size of the \a stack argument in words.
- * \param args The argument to pass to \a start_routine.
+ * \param stackspace Size of the \a stack argument in words.
+ * \param arg The argument to pass to \a start_routine.
  * \return 0 on success, non zero on failure.
  */
 int thread_create_in_group(void *(*start_routine)(void *), thread_group_t group,
-                           void *stack, unsigned num_stack_words, void *arg);
+                           void *stack, unsigned stackspace, void *arg);
 
 /**
  * thread_group_start() starts all threads in the thread group.
+ * \param group The thread group to start.
  */
 inline void thread_group_start(thread_group_t group) {
   asm volatile("msync res[%0]" : /* no outputs*/ : "r"(group) : "memory");
@@ -121,6 +132,7 @@ inline void thread_sync(void) {
  * thread_group_sync() pauses execution of the current thread utill all threads
  * in the thread group have called thread_sync(). An exception will be raised if
  * any threads in the thread group have exited.
+ * \param group The thread group to synchronize with.
  */
 inline void thread_group_sync(thread_group_t group)  {
   asm volatile("msync res[%0]" : /* no outputs*/ : "r"(group) : "memory");
@@ -129,6 +141,7 @@ inline void thread_group_sync(thread_group_t group)  {
 /**
  * Pauses execution of the current thread until all threads in the thread group
  * have exited.
+ * \param group The thread group to join with.
  */
 void thread_group_join(thread_group_t group);
 
