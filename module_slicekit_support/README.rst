@@ -21,8 +21,8 @@ following define::
 
   #define SLICEKIT_ENABLE_FLASH 1
 
-In this case you cannot access these four pins on the slice card
-slots.
+If you do enable flash, then clearly you will not be able to access
+the pins on the slice cards connected to these ports.
 
 If this module is used when the application target is not
 ``SLICEKIT-L2`` then this module will do nothing.
