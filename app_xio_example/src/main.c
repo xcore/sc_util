@@ -1,22 +1,24 @@
 #include <xs1.h>
 #include <print.h>
-#include "cxc.h"
+#include "xio.h"
+#include "athread.h"
+#include "sthread.h"
 
 //:port main
 void porttest() {
     port x, y;
-    x = port_init(XS1_PORT_1A);
-    y = port_init_buffered(XS1_PORT_1B, 32);
-    output_data(x, 1);
-    output_data(x, 0);
-    output_data(x, 1);
-    output_data(x, 0);
-    output_data(y, 0xAAAAAAAA);
-    output_data(y, 0xAAAAAAAA);
-    output_data(y, 0xAAAAAAAA);
-    output_data(y, 0xAAAAAAAA);
-    port_exit(x);
-    port_exit(y);
+    x = port_enable(XS1_PORT_1A);
+    y = port_enable_buffered(XS1_PORT_1B, 32);
+    port_output(x, 1);
+    port_output(x, 0);
+    port_output(x, 1);
+    port_output(x, 0);
+    port_output(y, 0xAAAAAAAA);
+    port_output(y, 0xAAAAAAAA);
+    port_output(y, 0xAAAAAAAA);
+    port_output(y, 0xAAAAAAAA);
+    port_disable(x);
+    port_disable(y);
 }
 //:port end
 
@@ -24,11 +26,11 @@ void porttest() {
 void timertest() {
     timer tmr;
     int v;
-    tmr = timer_init();
-    v = get_time(tmr);  // input current time value
+    tmr = timer_alloc();
+    v = timer_get_time(tmr);  // input current time value
     v += 100;           // add 100 = 1us as ref clock is 100 MHz
-    wait_until(tmr, v);
-    timer_exit(tmr);
+    timer_wait_until(tmr, v);
+    timer_free(tmr);
 }
 //:timer end
 
@@ -38,12 +40,12 @@ chanend c1, c2, c3, c4;
 
 //:athread funcs
 void f1() {
-    send_word(c1, 123);
+    chan_output_word(c1, 123);
     athread_exit();
 }
 
 void f2() {
-    send_word(c3, 1234);
+    chan_output_word(c3, 1234);
     athread_exit();
 }
 //:athread end funcs
@@ -54,14 +56,14 @@ void athread_test() {
     unsigned int s1[100], s2[100];
     int i;
 
-    chan_init(&c1, &c2);
-    chan_init(&c3, &c4);
+    chan_alloc(&c1, &c2);
+    chan_alloc(&c3, &c4);
     athread_init(t1, s1, 100, f1);
     athread_init(t2, s2, 100, f2);
-    i = receive_word(c2);
-    i = receive_word(c4);
-    chan_exit(c1, c2);
-    chan_exit(c3, c4);
+    i = chan_input_word(c2);
+    i = chan_input_word(c4);
+    chan_free(c1, c2);
+    chan_free(c3, c4);
 }
 //:athread end main
 

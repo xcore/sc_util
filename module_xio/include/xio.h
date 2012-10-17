@@ -1,5 +1,5 @@
-#ifndef __cxc_h__
-#define __cxc_h__
+#ifndef __xio_h__
+#define __xio_h__
 
 #include <xs1.h>
 #include <xccompat.h>
@@ -7,7 +7,6 @@
 #include "port.h"
 #include "timer.h"
 #include "select.h"
-#include "athread.h"
-#include "sthread.h"
+#include "xio_clock.h"
 
-#endif // __cxc_h__
+#endif // __xio_h__

@@ -14,15 +14,16 @@ To use xcore timers from C, include the file ``timer.h``.
 Types
 =====
 
-.. doxygentypedef:: timer_t
+.. doxygentypedef:: timer
 
 API
 ===
 
 .. doxygenfunction:: timer_init
 .. doxygenfunction:: timer_exit
-.. doxygenfunction:: timer_in
-.. doxygenfunction:: timer_in_when_timerafter
+.. doxygenfunction:: timer_get_time
+.. doxygenfunction:: timer_wait_until
+.. doxygenfunction:: timer_delay
 
 Example
 =======
@@ -54,16 +55,52 @@ Types
 API
 ===
 
+Synchronized Channel Operations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Initialization
+..............
+
 .. doxygenfunction:: chan_init
 .. doxygenfunction:: chan_exit
-.. doxygenfunction:: chan_out_int
-.. doxygenfunction:: chan_in_int
-.. doxygenfunction:: schan_init
-.. doxygenfunction:: schan_exit
-.. doxygenfunction:: schan_outct
-.. doxygenfunction:: schan_chkct
-.. doxygenfunction:: schan_out_int
-.. doxygenfunction:: schan_in_int
+
+Output
+......
+
+.. doxygenfunction:: chan_output_word
+.. doxygenfunction:: chan_output_byte
+.. doxygenfunction:: chan_output_block
+
+Input
+.....
+.. doxygenfunction:: chan_input_word
+.. doxygenfunction:: chan_input_byte
+.. doxygenfunction:: chan_input_block
+
+Streaming Channel Operations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Initialization
+..............
+
+.. doxygenfunction:: s_chan_init
+.. doxygenfunction:: s_chan_exit
+
+Output
+......
+
+.. doxygenfunction:: s_chan_output_word
+.. doxygenfunction:: s_chan_output_byte
+.. doxygenfunction:: s_chan_output_ct
+.. doxygenfunction:: s_chan_output_block
+
+Input
+.....
+
+.. doxygenfunction:: s_chan_check_ct
+.. doxygenfunction:: s_chan_input_word
+.. doxygenfunction:: s_chan_input_byte
+.. doxygenfunction:: s_chan_input_block
 
 Example
 =======

@@ -13,16 +13,16 @@ void f(chanend c, chanend d[2], chanend e)
     switch (choice)
       {
       case 0:
-        x = receive_word(c);
+        x = chan_input_word(c);
         printf("Received %d on channel c\n",x);
         break;
       case 1:
         i = get_selected_array_index();
-        x = receive_word(d[i]);
+        x = chan_input_word(d[i]);
         printf("Received %d on channel d[%d]\n",x,i);
         break;
       case 2:
-        x = receive_word(e);
+        x = chan_input_word(e);
         printf("Received %d on channel e\n",x);
         break;
       }
