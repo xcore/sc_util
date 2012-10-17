@@ -1,8 +1,8 @@
 #include <xs1.h>
 #include <print.h>
+#include <stdlib.h>
 #include "xio.h"
-#include "athread.h"
-#include "sthread.h"
+#include "thread.h"
 
 //:port main
 void porttest() {
@@ -40,31 +40,31 @@ void *input_thread(void *);
 void thread_test() {
     thread_t t;
     unsigned int s[100];
-    chanend_t c1, c2;
-    chan_init(c1, c2);
+    chanend c1, c2;
+    chan_alloc(&c1, &c2);
 
     thread_create(&t, &input_thread, s, 100, &c2);
-    chan_out_int(c1, 123);
+    chan_output_word(c1, 123);
     thread_join(t);
-    chan_exit(c1, c2);
+    chan_free(c1, c2);
 }
 
 void *input_thread(void *args) {
     int result;
-    chanend_t c = *(chanend_t*)args;
-    chan_in_int(c, result);
+    chanend c = *(chanend *)args;
+    result = chan_input_word(c);
     return NULL;
 }
 
 //:thread_detached main
 void thread_detached_test() {
     unsigned int s[100];
-    chanend_t c1, c2;
-    chan_init(c1, c2);
+    chanend c1, c2;
+    chan_alloc(&c1, &c2);
 
     thread_create_detached(&input_thread, s, 100, &c2);
-    chan_out_int(c1, 123);
-    chan_exit(c1, c2);
+    chan_output_word(c1, 123);
+    chan_free(c1, c2);
 }
 //:thread_detached end main
 
