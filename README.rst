@@ -18,11 +18,7 @@ Key Features
 To Do
 =====
 
-* simple I/O
-* pthreads
-* exception handlers
-* interrupts
-* documentation
+* selects
 
 Firmware Overview
 =================
