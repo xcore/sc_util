@@ -1,6 +1,6 @@
 TARGET = XK-1
 APP_NAME =
-USED_MODULES = module_c_xcore_resources
+USED_MODULES = module_xio
 XCC_FLAGS = -g -O3 -save-temps
 VERBOSE = 0
 
