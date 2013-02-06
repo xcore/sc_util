@@ -22,6 +22,9 @@
 /* Initiates a transaction with the NotifyingSlave */
 void mutual_comm_initiate(chanend c);
 
+/* Completes a transaction with the NotifyingSlave */
+void mutual_comm_complete(chanend c);
+
 
 #ifdef __XC__
 #pragma select handler

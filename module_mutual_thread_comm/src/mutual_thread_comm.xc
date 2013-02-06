@@ -18,6 +18,11 @@ void mutual_comm_initiate(chanend c)
   chkct(c, XS1_CT_END);
 }
 
+void mutual_comm_complete(chanend c)
+{
+  outct(c, XS1_CT_END);
+  chkct(c, XS1_CT_END);
+}
 
 // NotifyingSlave Thread Functions
 
@@ -45,6 +50,8 @@ void mutual_comm_complete_transaction(chanend c,
                                       int &is_response_to_notification,
                                       mutual_comm_state_t &notified)
 {
+  outct(c, XS1_CT_END);
+  chkct(c, XS1_CT_END);
   if (!is_response_to_notification && notified)
     outct(c, XS1_CT_END);
 }

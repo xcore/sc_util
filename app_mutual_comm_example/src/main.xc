@@ -58,14 +58,17 @@ void threadB(chanend c) {
         mutual_comm_initiate(c);
         c <: val;
         val += 13;
+        mutual_comm_complete(c);
         break;
       case mutual_comm_notified(c):
         {
           int x;
           //printstr("Thread B: Receiving from Thread A: ");
           c :> x;
+          mutual_comm_complete(c);
           printstr("Thread B: Received from Thread A: ");
           printintln(x);
+
         }
         break;
       }
