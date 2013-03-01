@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xpd>
+    <components></components>
+    <location>git@github.com:xcore/sc_util</location>
+    <name>sc_util</name>
+    <maintainer>davelxmos</maintainer>
+    <vendor>XMOS</vendor>
+    <xcore_repo>sc_util</xcore_repo>
+    <xpd_version>1.0</xpd_version>
+    <exclude_dir>module_xio</exclude_dir>
+    <exclude_dir>module_xthreads</exclude_dir>
+    <exclude_dir>app_xio_example</exclude_dir>
+    <exclude_dir>app_select_example</exclude_dir>
+    <exclude_dir>app_blink</exclude_dir>
+</xpd>
