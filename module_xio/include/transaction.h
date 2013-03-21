@@ -1,1 +1,0 @@
-#ifndef __chan_transaction_h__
