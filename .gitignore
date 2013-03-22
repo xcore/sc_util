@@ -25,3 +25,4 @@ doc/index.toc
 __generated*
 *.settings
 *.buildinfo
+*test.output
