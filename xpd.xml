@@ -22,7 +22,6 @@
             <keyword>tracing</keyword>
         </component>
     </components>
-    <dependency repo = "sc_xcore_c_utils"></dependency>
     <description>General Utilities Repository</description>
     <docdir>module_random/doc</docdir>
     <exclude_dir>tests</exclude_dir>
