@@ -1,13 +1,15 @@
 <?xml version="1.0" ?>
 <xpd>
     <components>
-        <component description = "Random number generation module" type = "demoCode" scope = "Example" path = "module_random" local = "false" id = "module_random" name = "Random number generation module"></component>
+        <component name = "Random number generation module" type = "component" buildresults_path = "module_random/.module_random.buildinfo" scope = "General Use" path = "module_random" metainfo_path = "module_random/module_random.metainfo" local = "false" id = "module_random" description = "Random number generation module"></component>
         <component description = "Random number generation example" type = "demoCode" scope = "Example" path = "app_random_example" local = "false" id = "app_random_example" name = "Random number generation example">
             <componentDependency>module_random</componentDependency>
         </component>
     </components>
     <dependency repo = "sc_xcore_c_utils"></dependency>
-    <description>Genereal Utilities Repository</description>
+    <description>General Utilities Repository</description>
+    <docdir>module_random/doc</docdir>
+    <exclude_dir>tests</exclude_dir>
     <location>git@github.com:xcore/sc_util</location>
     <name>sc_util</name>
     <maintainer>davelxmos</maintainer>

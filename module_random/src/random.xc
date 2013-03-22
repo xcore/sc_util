@@ -1,16 +1,23 @@
 #include "random.h"
+#include <xs1.h>
 
-static unsigned int seed = -1;
+static const unsigned random_poly = 0xEDB88320;
 
-int randomSimple() {
-    crc32(seed, -1, 0xEDB88320);
-    return seed;
+unsigned random_get_random_number(random_generator_t &g)
+{
+  crc32(g, -1, random_poly);
+  return (unsigned) g;
 }
 
-void randomSimpleSeed(int x) {
-    crc32(seed, x, 0xEDB88320);
+random_generator_t random_create_generator_from_seed(unsigned seed)
+{
+  random_generator_t gen = (random_generator_t) seed;
+  (void) random_get_random_number(gen);
+  return gen;
 }
 
-void randomSimpleRandomiseSeed() {
-    crc32(seed, getps(0x070B), 0xEDB88320);
+random_generator_t random_create_generator_from_hw_seed(void)
+{
+  return random_create_generator_from_seed(getps(0x070B));
 }
+

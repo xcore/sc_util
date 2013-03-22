@@ -1,7 +1,7 @@
 TARGET = XK-1
 APP_NAME =
 USED_MODULES = module_random
-XCC_FLAGS = -g -O3
+XCC_FLAGS = -g -O3 -save-temps
 VERBOSE = 0
 
 #=============================================================================

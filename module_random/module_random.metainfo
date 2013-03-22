@@ -1,0 +1,21 @@
+-- -*- mode: lua -*-
+
+configPoints = {}
+
+derivedValues = {}
+
+function getConfigStatus()
+         return "Trusted", {};
+end
+
+ports = {}
+
+channels = {}
+
+generatedCode = {
+   includes = {"random.h"},
+   globals  = "",
+   body = ""
+}
+
+api = {'random_get_random_number','random_create_generator_from_seed'}
