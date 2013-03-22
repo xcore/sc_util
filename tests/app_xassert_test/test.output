@@ -1,0 +1,120 @@
+----
+app_xassert_test_test_assert.xe:
+
+
+Program received signal ET_ECALL, Application exception.
+7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it?"));
+
+----
+
+----
+app_xassert_test_test_assert_disabled.xe:
+
+
+Program exited normally.
+
+----
+
+----
+app_xassert_test_test_assert_with_debug.xe:
+
+1 > 2 && _msg("1 is bigger than 2 isn't it?")
+
+Program received signal ET_ECALL, Application exception.
+7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it?"));
+
+----
+
+----
+app_xassert_test_test_fail.xe:
+
+
+Program received signal ET_ECALL, Application exception.
+11	  fail("This is a failure in unitA");
+
+----
+
+----
+app_xassert_test_test_fail_disabled.xe:
+
+
+Program received signal ET_ECALL, Application exception.
+11	  fail("This is a failure in unitA");
+
+----
+
+----
+app_xassert_test_test_fail_with_debug.xe:
+
+This is a failure in unitA
+
+Program received signal ET_ECALL, Application exception.
+11	  fail("This is a failure in unitA");
+
+----
+
+----
+app_xassert_test_test_unitA_disabled.xe:
+
+
+Program received signal ET_ECALL, Application exception.
+    at /home/davel/github/sc_util/tests/app_xassert_test/.build_test_unitA_disabled/../src/unitB.c:7
+7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it? (unitB)"));
+
+----
+
+----
+app_xassert_test_test_unitA_enabled.xe:
+
+
+Program received signal ET_ECALL, Application exception.
+7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it?"));
+
+----
+
+----
+app_xassert_test_test_unitB_disabled.xe:
+
+
+Program received signal ET_ECALL, Application exception.
+7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it?"));
+
+----
+
+----
+app_xassert_test_test_unitB_enabled.xe:
+
+
+Program received signal ET_ECALL, Application exception.
+    at /home/davel/github/sc_util/tests/app_xassert_test/.build_test_unitB_enabled/../src/unitB.c:7
+7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it? (unitB)"));
+
+----
+
+----
+app_xassert_test_test_unreachable.xe:
+
+
+Program received signal ET_ECALL, Application exception.
+15	  unreachable("This is unreachable in unitA");
+
+----
+
+----
+app_xassert_test_test_unreachable_disabled.xe:
+
+
+Program received signal SIGBUS, Bus error.
+
+----
+
+----
+app_xassert_test_test_unreachable_with_debug.xe:
+
+This is unreachable in unitA
+
+Program received signal ET_ECALL, Application exception.
+15	  unreachable("This is unreachable in unitA");
+
+----
+

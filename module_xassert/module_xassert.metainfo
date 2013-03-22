@@ -1,0 +1,21 @@
+-- -*- mode: lua -*-
+
+configPoints = {}
+
+derivedValues = {}
+
+function getConfigStatus()
+         return "Trusted", {};
+end
+
+ports = {}
+
+channels = {}
+
+generatedCode = {
+   includes = {"xassert.h"},
+   globals  = "",
+   body = ""
+}
+
+api = {}
