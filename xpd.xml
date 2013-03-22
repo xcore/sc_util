@@ -2,8 +2,24 @@
 <xpd>
     <components>
         <component name = "Random number generation module" type = "component" buildresults_path = "module_random/.module_random.buildinfo" scope = "General Use" path = "module_random" metainfo_path = "module_random/module_random.metainfo" local = "false" id = "module_random" description = "Random number generation module"></component>
+        <component name = "Lightweight and flexible assertion module" type = "component" buildresults_path = "module_xassert/.module_xassert.buildinfo" scope = "General Use" path = "module_xassert" metainfo_path = "module_xassert/module_xassert.metainfo" local = "false" id = "module_xassert" description = "Lightweight and flexible assertion module">
+            <keyword>debug</keyword>
+            <keyword>assertion</keyword>
+            <keyword>assert</keyword>
+        </component>
+        <component name = "Lock Handling Library" type = "component" buildresults_path = "module_locks/.module_locks.buildinfo" scope = "General Use" path = "module_locks" metainfo_path = "module_locks/module_locks.metainfo" local = "false" id = "module_locks" description = "A library for handling hardware and software locks between tasks.">
+            <keyword>locks</keyword>
+            <keyword>concurrency</keyword>
+            <keyword>synchronization</keyword>
+        </component>
         <component description = "Random number generation example" type = "demoCode" scope = "Example" path = "app_random_example" local = "false" id = "app_random_example" name = "Random number generation example">
             <componentDependency>module_random</componentDependency>
+        </component>
+        <component name = "Debug Printing Module" type = "component" buildresults_path = "module_logging/.module_logging.buildinfo" scope = "General Use" path = "module_logging" metainfo_path = "module_logging/module_logging.metainfo" local = "false" id = "module_logging" description = "A library for debug printing to the console">
+            <keyword>printing</keyword>
+            <keyword>debug</keyword>
+            <keyword>logging</keyword>
+            <keyword>tracing</keyword>
         </component>
     </components>
     <dependency repo = "sc_xcore_c_utils"></dependency>
