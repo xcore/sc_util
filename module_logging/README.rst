@@ -1,9 +1,13 @@
-<Add title here>
-================
+Debug Printing Module
+=====================
 
-:scope: <Put one of Roadmap, Example, Early Development or General Use>
-:description: <Add one line here>
-:keywords: <Add comma separated list of keywords>
-:boards: <Add comma separated list of supported boards>
+:scope: General Use
+:description: A library for debug printing to the console
+:keywords: printing, debug, logging, tracing
 
-<Add description of software block>
+This module provides a lightweight printf function that can be enabled
+or disabled via configuration macros. Code can be declared to be
+within a "debug unit" (usually a module) and prints can be
+enabled/disabled per debug unit.
+
+

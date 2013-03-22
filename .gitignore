@@ -20,3 +20,6 @@ doc/index.out
 doc/index.pdf
 doc/index.tex
 doc/index.toc
+__generated*
+*.settings
+*.buildinfo

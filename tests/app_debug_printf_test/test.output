@@ -1,0 +1,80 @@
+----
+app_debug_printf_test_default.xe:
+
+
+Program exited normally.
+
+----
+
+----
+app_debug_printf_test_disabled.xe:
+
+
+Program exited normally.
+
+----
+
+----
+app_debug_printf_test_enabled.xe:
+
+Main application message
+Unit A
+Int: -5
+Unsigned: 5
+Hex: 1F4
+String: hello world
+Char: a
+Unit B
+
+Program exited normally.
+
+----
+
+----
+app_debug_printf_test_unitA_disabled.xe:
+
+Main application message
+Unit B
+
+Program exited normally.
+
+----
+
+----
+app_debug_printf_test_unitA_enabled.xe:
+
+Unit A
+Int: -5
+Unsigned: 5
+Hex: 1F4
+String: hello world
+Char: a
+
+Program exited normally.
+
+----
+
+----
+app_debug_printf_test_unitB_disabled.xe:
+
+Main application message
+Unit A
+Int: -5
+Unsigned: 5
+Hex: 1F4
+String: hello world
+Char: a
+
+Program exited normally.
+
+----
+
+----
+app_debug_printf_test_unitB_enabled.xe:
+
+Unit B
+
+Program exited normally.
+
+----
+
