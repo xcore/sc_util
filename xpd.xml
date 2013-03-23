@@ -25,6 +25,7 @@
     <description>General Utilities Repository</description>
     <docdir>module_random/doc</docdir>
     <docdir>module_xassert/doc</docdir>
+    <docdir>module_logging/doc</docdir>
     <exclude_dir>tests</exclude_dir>
     <location>git@github.com:xcore/sc_util</location>
     <name>sc_util</name>
