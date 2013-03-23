@@ -30,6 +30,8 @@
     <location>git@github.com:xcore/sc_util</location>
     <name>sc_util</name>
     <maintainer>davelxmos</maintainer>
+    <partnumber>XM-002736-DH</partnumber>
+    <subpartnumber>XM-002737-SM</subpartnumber>
     <vendor>XMOS</vendor>
     <xcore_repo>sc_util</xcore_repo>
     <xpd_version>1.0</xpd_version>
@@ -39,6 +41,4 @@
     <xsoftip_exclude>app_client_server_example</xsoftip_exclude>
     <xsoftip_exclude>app_xfifo_example</xsoftip_exclude>
     <xsoftip_exclude>app_mutual_comm_example</xsoftip_exclude>
-    <subpartnumber>XM-002737-SM</subpartnumber>
-    <partnumber>XM-002736-DH</partnumber>
 </xpd>
