@@ -1,0 +1,1 @@
+SOURCE_INCLUDE_DIRS = ..
