@@ -21,6 +21,10 @@
             <keyword>logging</keyword>
             <keyword>tracing</keyword>
         </component>
+        <component name = "Slicekit Core Board Support Library" type = "component" buildresults_path = "module_slicekit_support/.module_slicekit_support.buildinfo" scope = "General Use" path = "module_slicekit_support" metainfo_path = "module_slicekit_support/module_slicekit_support.metainfo" local = "false" id = "module_slicekit_support" description = "A library for configuring the sliceKIT Core Board ports">
+            <keyword>slicekit</keyword>
+            <keyword>spi</keyword>
+        </component>
     </components>
     <description>General Utilities Repository</description>
     <docdir>module_random/doc</docdir>
@@ -31,6 +35,7 @@
     <name>sc_util</name>
     <maintainer>davelxmos</maintainer>
     <partnumber>XM-002736-DH</partnumber>
+    <release parenthash = "768ca06ed7226e232fc7cb56fc6f1fccf7056d75" version = "1.0.0beta0"></release>
     <subpartnumber>XM-002737-SM</subpartnumber>
     <vendor>XMOS</vendor>
     <xcore_repo>sc_util</xcore_repo>
