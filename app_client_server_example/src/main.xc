@@ -4,7 +4,7 @@
 
 #define PERIOD 30000
 
-void client(chanend c) {
+void application(chanend c) {
   timer tmr;
   int t;
   int data;
@@ -39,7 +39,7 @@ void client(chanend c) {
 int main() {
   chan c;
   par {
-    client(c);
+    application(c);
     foo_server(c);
   }
   return 0;
