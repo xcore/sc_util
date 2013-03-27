@@ -35,7 +35,8 @@
     <name>sc_util</name>
     <maintainer>davelxmos</maintainer>
     <partnumber>XM-002736-DH</partnumber>
-    <release parenthash = "768ca06ed7226e232fc7cb56fc6f1fccf7056d75" version = "1.0.0beta0"></release>
+    <release parenthash = "768ca06ed7226e232fc7cb56fc6f1fccf7056d75" version = "1.0.0beta0" githash = "747d4d379cd5889a6d5cb2eea1fb58864df04d63"></release>
+    <release parenthash = "9d5cfb4da13d25d25a5381ea752ee17d97820be7" version = "1.0.0beta1"></release>
     <subpartnumber>XM-002737-SM</subpartnumber>
     <vendor>XMOS</vendor>
     <xcore_repo>sc_util</xcore_repo>
