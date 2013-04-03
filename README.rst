@@ -1,8 +1,8 @@
 XCORE programming utility modules
 .................................
 
-:Latest release: 1.0.0beta1
-:Maintainer: XMOS
+:Latest release: 1.0.0beta2
+:Maintainer: davelxmos
 :Description: General Utilities Repository
 
 
