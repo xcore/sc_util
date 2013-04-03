@@ -20,17 +20,17 @@ typedef unsigned random_generator_t;
  *
  * \param seed  seed for the generator.
  *
- * \returns    a random number generator
+ * \returns     a random number generator.
  */
 random_generator_t random_create_generator_from_seed(unsigned seed);
 
-#if RANDOM_ENABLE_HW_SEED || defined(__DOXYGEN__)
-/** Function that attempts to create a random number genereator from
+#if (defined(__XS1_L__) && RANDOM_ENABLE_HW_SEED) || defined(__DOXYGEN__)
+/** Function that attempts to create a random number generator from
  *  a true random value into the seed, using
  *  an asynchronous timer. To use this function you must enable the
  *  ``RANDOM_ENABLE_HW_SEED`` define in your application's ``random_conf.h``.
  *
- *  \returns a random number generator
+ *  \returns a random number generator.
  */
 random_generator_t random_create_generator_from_hw_seed(void);
 #endif
@@ -41,7 +41,7 @@ random_generator_t random_create_generator_from_hw_seed(void);
  *
  *  \param g    the used generator to produce the seed.
  *
- *  \returns    a random 32 bit number
+ *  \returns    a random 32 bit number.
  */
 unsigned
 random_get_random_number(REFERENCE_PARAM(random_generator_t, g));

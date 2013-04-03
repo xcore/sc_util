@@ -3,8 +3,7 @@
 // University of Illinois/NCSA Open Source License posted in
 // LICENSE.txt and at <http://github.xcore.com/>
 
-typedef unsigned swlock_t;
-
+#include "swlock.h"
 /* Locks */
 
 void swlock_init(volatile swlock_t *lock)
@@ -20,7 +19,7 @@ void swlock_acquire(volatile swlock_t *lock)
   do {
     value = swlock_try_acquire(lock);
   }
-  while (!value);
+  while (value == SWLOCK_NOT_ACQUIRED);
 }
 
 void swlock_release(volatile swlock_t *lock)

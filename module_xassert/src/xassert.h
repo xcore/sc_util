@@ -8,7 +8,7 @@ xassert Module
 This module provides a lightweight and flexible replacement for the
 standard C header ``assert.h``.
 
-The assertions in this module can be be enabled/disabled
+The assertions in this module can be enabled/disabled
 and configured as to how much debug information they show. This
 configuration can be per "debug unit" (i.e. for sets of files).
 
@@ -70,11 +70,13 @@ XASSERT_ENABLE_ASSERTIONS
 
 XASSERT_ENABLE_DEBUG
   This define will cause assertions to print out the failing expression before
-  trapping (defaults to 0).
+  trapping (defaults to 0). Note that this option could significantly increase
+  the code size of your application.
 
 XASSERT_ENABLE_LINE_NUMBERS
   This define will cause assertions to print the file and line number of the
-  assertion before trapping.
+  assertion before trapping. Note that this option could significantly increase
+  the code size of your application.
 
 If ``DEBUG_UNIT`` is defined when ``xassert.h`` is included then all the
 assertions in that file belong to that unit. Assertions can then be
@@ -171,12 +173,12 @@ XASSERT_DISABLE_DEBUG_[debug unit]
 
 #if XASSERT_ENABLE_ASSERTIONS0
 #  if XASSERT_ENABLE_DEBUG0
-#    define xassert(e) do {if (!(e)) {\
+#    define xassert(e) do { if (!(e)) {\
        printstr(#e); xassert_print_line; \
       __builtin_trap();} \
       } while(0)
 #  else
-#    define xassert(e) do {if (!(e)) __builtin_trap();} while(0)
+#    define xassert(e) do { if (!(e)) __builtin_trap();} while(0)
 #  endif
 #else
 #  define xassert(e)   // disabled
@@ -184,21 +186,21 @@ XASSERT_DISABLE_DEBUG_[debug unit]
 
 #if XASSERT_ENABLE_ASSERTIONS0
 #  if XASSERT_ENABLE_DEBUG0
-#    define unreachable(msg) do {printstr(msg); xassert_print_line; __builtin_trap();} while(0)
+#    define unreachable(msg) do { printstr(msg); xassert_print_line; __builtin_trap();} while(0)
 #  else
-#    define unreachable(msg) do {__builtin_trap();} while(0)
+#    define unreachable(msg) do { __builtin_trap();} while(0)
 #  endif
 #else
-#  define unreachable(msg) do {__builtin_unreachable();} while(0)
+#  define unreachable(msg) do { __builtin_unreachable();} while(0)
 #endif
 
 #if XASSERT_ENABLE_DEBUG0
-#  define fail(msg) do {printstr(msg); xassert_print_line; __builtin_trap();} while(0)
+#  define fail(msg) do { printstr(msg); xassert_print_line; __builtin_trap();} while(0)
 #else
-#  define fail(msg) do {__builtin_trap();} while(0)
+#  define fail(msg) do { __builtin_trap();} while(0)
 #endif
 
-static inline int _msg(const char msg[]) {return 1;}
+static inline int _msg(const char msg[]) { return 1; }
 
 #if !defined(assert) && !XASSERT_DISABLE_ASSERT_DEF
 #define assert(...) xassert(__VA_ARGS__)

@@ -16,8 +16,11 @@ random_generator_t random_create_generator_from_seed(unsigned seed)
   return gen;
 }
 
+static const unsigned XS1_L_RING_OSCILLATOR_VALUE_REG  = 0x070B;
+
 random_generator_t random_create_generator_from_hw_seed(void)
 {
-  return random_create_generator_from_seed(getps(0x070B));
+  unsigned init_seed = getps(XS1_L_RING_OSCILLATOR_VALUE_REG);
+  return random_create_generator_from_seed(init_seed);
 }
 
