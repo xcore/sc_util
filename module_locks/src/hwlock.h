@@ -3,7 +3,10 @@
 // University of Illinois/NCSA Open Source License posted in
 // LICENSE.txt and at <http://github.xcore.com/>
 
+#ifndef XS1_RES_TYPE_LOCK
 #define XS1_RES_TYPE_LOCK 5
+#endif
+
 #define QUOTEAUX(x) #x
 #define QUOTE(x) QUOTEAUX(x)
 
