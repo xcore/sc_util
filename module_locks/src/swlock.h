@@ -10,19 +10,15 @@
 /** Type that represents a software lock */
 typedef unsigned swlock_t;
 
-/** This define should be used to initialize a software lock e.g.::
- *
- *  swlock_t my_lock = SWLOCK_INITIAL_VALUE;
- *
- *  If you intialize this way there is no need to call swlock_init().
- */
-#define SWLOCK_INITIAL_VALUE 0
+/** This define should be used to initialize a software lock e.g.
 
-#ifdef __XC__
-#define VOLATILE_SWLOCK swlock_t
-#else
-#define VOLATILE_SWLOCK volatile swlock_t
-#endif
+    \code
+       swlock_t my_lock = SWLOCK_INITIAL_VALUE;
+    \endcode
+
+    If you intialize this way there is no need to call swlock_init().
+*/
+#define SWLOCK_INITIAL_VALUE 0
 
 enum {
   SWLOCK_NOT_ACQUIRED = 0
@@ -34,7 +30,7 @@ enum {
  *  hardware locks, there is no need to allocate or free a software lock from a
  *  limited pool.
  */
-void swlock_init(REFERENCE_PARAM(VOLATILE_SWLOCK, lock));
+void swlock_init(REFERENCE_PARAM(swlock_t, lock));
 
 /** Try and acquire a software lock.
  *
@@ -47,7 +43,7 @@ void swlock_init(REFERENCE_PARAM(VOLATILE_SWLOCK, lock));
  *           the attempt fails. Any other value indicates that the
  *           acquisition has succeeded.
  */
-int  swlock_try_acquire(REFERENCE_PARAM(VOLATILE_SWLOCK, lock));
+int  swlock_try_acquire(REFERENCE_PARAM(swlock_t, lock));
 
 /** Acquire a software lock.
  *
@@ -58,7 +54,7 @@ int  swlock_try_acquire(REFERENCE_PARAM(VOLATILE_SWLOCK, lock));
  *  \param   lock  the software lock to acquire.
  *
  */
-void swlock_acquire(REFERENCE_PARAM(VOLATILE_SWLOCK, lock));
+void swlock_acquire(REFERENCE_PARAM(swlock_t, lock));
 
 /** Release a software lock.
  *
@@ -68,6 +64,6 @@ void swlock_acquire(REFERENCE_PARAM(VOLATILE_SWLOCK, lock));
  *  \param lock   the software lock to release.
  *
  */
-void swlock_release(REFERENCE_PARAM(VOLATILE_SWLOCK, lock));
+void swlock_release(REFERENCE_PARAM(swlock_t, lock));
 
 #endif

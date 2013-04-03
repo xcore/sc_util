@@ -19,4 +19,5 @@ int main()
     use_swlock(6);
   }
   free_locks();
+  return 0;
 }

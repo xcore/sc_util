@@ -6,14 +6,15 @@
 #include "swlock.h"
 /* Locks */
 
-void swlock_init(volatile swlock_t *lock)
+void swlock_init(swlock_t *_lock)
 {
+  volatile swlock_t *lock = _lock;
   *lock = 0;
 }
 
-extern int swlock_try_acquire(volatile swlock_t *lock);
+extern int swlock_try_acquire(swlock_t *lock);
 
-void swlock_acquire(volatile swlock_t *lock)
+void swlock_acquire(swlock_t *lock)
 {  
   int value;
   do {
@@ -22,14 +23,9 @@ void swlock_acquire(volatile swlock_t *lock)
   while (value == SWLOCK_NOT_ACQUIRED);
 }
 
-void swlock_release(volatile swlock_t *lock)
+void swlock_release(swlock_t *lock)
 {
   *lock = 0;
 }
 
-void swlock_init_xc(swlock_t *lock) { swlock_init(lock); }
-
-int swlock_try_acquire_xc(swlock_t *lock) {return swlock_try_acquire(lock); }
-
-void swlock_acquire_xc(swlock_t *lock) {swlock_acquire(lock);}
 
