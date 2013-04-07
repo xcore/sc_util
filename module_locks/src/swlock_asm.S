@@ -35,6 +35,7 @@ swlock_try_acquire:
     ldc r0, 0
 .l_end:
     retsp 0
+.size swlock_try_acquire, .-swlock_try_acquire
 .cc_bottom swlock_try_acquire.function
 .set swlock_try_acquire.maxchanends, 0
 .set swlock_try_acquire.maxtimers, 0
