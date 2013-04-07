@@ -12,7 +12,6 @@
 .globl swlock_try_acquire.maxthreads
 .globl swlock_try_acquire.maxtimers
 .globl swlock_try_acquire.maxchanends
-.globl swlock_try_acquire.maxsync
 .type  swlock_try_acquire, @function
 .linkset swlock_try_acquire.locnoside, 1
 .linkset swlock_try_acquire.locnochandec, 1
