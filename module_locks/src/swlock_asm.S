@@ -19,15 +19,15 @@
 swlock_try_acquire:
     get r11, id
     add r11, r11, 1
-    ldw r1, r0[0]            // get the current mutex value
-    bt  r1, .l_failed        // check if it is already claimed
-    stw r11, r0[0]           // claim it
+    ldw r1, r0[0]            // Get the current mutex value.
+    bt  r1, .l_failed        // Check if it is already claimed.
+    stw r11, r0[0]           // Claim it.
     nop
-    ldw r2, r0[0]            // reload the mutex
-    eq  r2, r11, r2          // check if someone else has claimed 
-                             //    it after me
-    bf r2, .l_failed         // stand down if someone else has 
-                             // claimed it
+    ldw r2, r0[0]            // Reload the mutex.
+    eq  r2, r11, r2          // Check if someone else has claimed
+                             // it after me.
+    bf r2, .l_failed         // Stand down if someone else has
+                             // claimed it.
 .l_acquired_mutex:
     ldc r0, 1
     bu .l_end
