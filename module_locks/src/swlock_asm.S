@@ -5,7 +5,7 @@
 
           .file     "swlock_asm.S"
           .text
-.cc_top swlock_try_acquire.function,swlock_try_acquire
+.cc_top swlock_try_acquire.function
           .align    4
 .globl swlock_try_acquire
 .globl swlock_try_acquire.nstackwords
@@ -13,9 +13,9 @@
 .globl swlock_try_acquire.maxtimers
 .globl swlock_try_acquire.maxchanends
 .type  swlock_try_acquire, @function
-.linkset swlock_try_acquire.locnoside, 1
-.linkset swlock_try_acquire.locnochandec, 1
-.linkset swlock_try_acquire.nstackwords, 0
+.set swlock_try_acquire.locnoside, 1
+.set swlock_try_acquire.locnochandec, 1
+.set swlock_try_acquire.nstackwords, 0
 swlock_try_acquire:
     get r11, id
     add r11, r11, 1
@@ -36,9 +36,9 @@ swlock_try_acquire:
 .l_end:
     retsp 0      
 .cc_bottom swlock_try_acquire.function
-.linkset swlock_try_acquire.maxchanends, 0
-.linkset swlock_try_acquire.maxtimers, 0
-.linkset swlock_try_acquire.maxthreads, 1
+.set swlock_try_acquire.maxchanends, 0
+.set swlock_try_acquire.maxtimers, 0
+.set swlock_try_acquire.maxthreads, 1
           .core     "XS1"
           .corerev  "REVB"
 
