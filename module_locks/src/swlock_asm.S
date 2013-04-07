@@ -34,13 +34,10 @@ swlock_try_acquire:
 .l_failed:
     ldc r0, 0
 .l_end:
-    retsp 0      
+    retsp 0
 .cc_bottom swlock_try_acquire.function
 .set swlock_try_acquire.maxchanends, 0
 .set swlock_try_acquire.maxtimers, 0
 .set swlock_try_acquire.maxthreads, 1
           .core     "XS1"
           .corerev  "REVB"
-
-
-     
