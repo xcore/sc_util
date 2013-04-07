@@ -13,7 +13,6 @@
 .globl swlock_try_acquire.maxtimers
 .globl swlock_try_acquire.maxchanends
 .type  swlock_try_acquire, @function
-.set swlock_try_acquire.locnoside, 1
 .set swlock_try_acquire.locnochandec, 1
 .set swlock_try_acquire.nstackwords, 0
 swlock_try_acquire:
