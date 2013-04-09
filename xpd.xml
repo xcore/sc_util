@@ -50,7 +50,9 @@
     <xsoftip_exclude>module_xfifo</xsoftip_exclude>
     <xsoftip_exclude>module_xc_ptr</xsoftip_exclude>
     <xsoftip_exclude>module_mutual_thread_comm</xsoftip_exclude>
+    <xsoftip_exclude>module_trycatch</xsoftip_exclude>
     <xsoftip_exclude>app_client_server_example</xsoftip_exclude>
     <xsoftip_exclude>app_xfifo_example</xsoftip_exclude>
     <xsoftip_exclude>app_mutual_comm_example</xsoftip_exclude>
+    <xsoftip_exclude>app_trycatch_example</xsoftip_exclude>
 </xpd>
