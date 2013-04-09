@@ -23,7 +23,7 @@ typedef struct exception_t {
 #include "trycatch_impl.h"
 
 /// Macro to execute a block of code catching any raised hardware exceptions.
-/// The TRY macro must be immediately followed by a catch macro as
+/// The TRY macro must be immediately followed by a CATCH macro as
 /// follows:
 /// \code
 /// exception_t exception;
