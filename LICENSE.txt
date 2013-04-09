@@ -1,6 +1,6 @@
 Software License Agreement
 
-Copyright (c) 2011, XMOS Ltd, All rights reserved.
+Copyright (c) 2011-2013, XMOS Ltd, All rights reserved.
 
 Additional copyright holders (each contributor holds copyright
 over contribution as described in the git commit logs for the repository):
