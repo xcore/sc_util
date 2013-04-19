@@ -18,7 +18,7 @@ Program exited normally.
 ----
 app_xassert_test_assert_with_debug.xe:
 
-1 > 2 && _msg("1 is bigger than 2 isn't it?")
+1 > 2 && xassert_msg("1 is bigger than 2 isn't it?")
 
 Program received signal ET_ECALL, Application exception.
 7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it?"));
@@ -59,7 +59,7 @@ app_xassert_test_unitA_disabled.xe:
 
 Program received signal ET_ECALL, Application exception.
     at /home/davel/github/sc_util/tests/app_xassert_test/.build_unitA_disabled/../src/unitB.c:7
-7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it? (unitB)"));
+7	  assert(1 > 2 && msg("1 is bigger than 2 isn't it? (unitB)"));
 
 ----
 
@@ -87,7 +87,7 @@ app_xassert_test_unitB_enabled.xe:
 
 Program received signal ET_ECALL, Application exception.
     at /home/davel/github/sc_util/tests/app_xassert_test/.build_unitB_enabled/../src/unitB.c:7
-7	  assert(1 > 2 && _msg("1 is bigger than 2 isn't it? (unitB)"));
+7	  assert(1 > 2 && msg("1 is bigger than 2 isn't it? (unitB)"));
 
 ----
 

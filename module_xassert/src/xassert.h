@@ -22,9 +22,9 @@ An assertion can be inserted into code with the ``assert`` macro e.g.::
 
    assert(i < n);
 
-Optionally a debug message can be added with the ``_msg`` function::
+Optionally a debug message can be added with the ``msg`` macro::
 
-   assert(i < n && _msg("i must be less than the array bound"));
+   assert(i < n && msg("i must be less than the array bound"));
 
 If assertions are enabled and the expression in the assertion is false than a
 trap will occur.
@@ -200,7 +200,15 @@ XASSERT_DISABLE_DEBUG_[debug unit]
 #  define fail(msg) do { __builtin_trap();} while(0)
 #endif
 
-static inline int _msg(const char msg[]) { return 1; }
+inline int xassert_msg(const char msg[]) { return 1; }
+
+#ifdef __XC__
+#define _msg(x) xassert_msg(x)
+#define  msg(x) xassert_msg(x)
+#else
+#define _msg(x) x
+#define  msg(x) x
+#endif
 
 #if !defined(assert) && !XASSERT_DISABLE_ASSERT_DEF
 #define assert(...) xassert(__VA_ARGS__)
