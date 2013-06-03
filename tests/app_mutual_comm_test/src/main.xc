@@ -207,11 +207,14 @@ int main() {
   chan c;
   chan c0, c1, c2, c3;
   chan c4, c5, c6, c7;
+  chan c8, c9, c10, c11;
   par {
     on tile[0] : test_producer_consumer(c0, c1, c2, c3);
     on tile[1] : test_producer_consumer(c0, c1, c2, c3);
     on tile[0] : test_producer_consumer(c4, c5, c6, c7);
     on tile[1] : test_producer_consumer(c4, c5, c6, c7);
+    on tile[0] : test_producer_consumer(c8, c9, c10, c11);
+    on tile[1] : test_producer_consumer(c8, c9, c10, c11);
 
     on tile[0] : test_client(c);
     on tile[1] : test_server(c);
