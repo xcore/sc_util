@@ -9,12 +9,14 @@ void mutual_comm_notified(chanend c)
   (void) inct(c);
   outuchar(c, 1);
   outct(c, XS1_CT_END);
+  chkct(c, XS1_CT_END);
 }
 
 void mutual_comm_initiate(chanend c)
 {
   outuchar(c, 0);
   outct(c, XS1_CT_END);
+  chkct(c, XS1_CT_END);
   chkct(c, XS1_CT_END);
 }
 
@@ -44,6 +46,7 @@ void mutual_comm_transaction(chanend c,
     if (!notified)
       outct(c,XS1_CT_END);
   }
+  outct(c,XS1_CT_END);
 }
 
 void mutual_comm_complete_transaction(chanend c,
