@@ -156,16 +156,10 @@
 								<option id = "com.xmos.xc.compiler.option.include.paths.98131254" name="com.xmos.xc.compiler.option.include.paths" superClass="com.xmos.xc.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/gcc&quot;"/>
-                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build}&quot;' />
+                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example}&quot;' />
 <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/m_locks/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/bin}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example}&quot;' />
 <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/fake_inc}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/m_locks}&quot;' />
+<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks}&quot;' />
 
 								</option>
 								<inputType id = "com.xmos.cdt.xc.compiler.input.73354425" name="XC" superClass="com.xmos.cdt.xc.compiler.input"/>
@@ -277,16 +271,10 @@
 								<option id = "com.xmos.c.compiler.option.include.paths.19433673" name="com.xmos.c.compiler.option.include.paths" superClass="com.xmos.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/gcc&quot;"/>
-                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build}&quot;' />
+                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example}&quot;' />
 <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/m_locks/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/bin}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example}&quot;' />
 <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/fake_inc}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/m_locks}&quot;' />
+<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks}&quot;' />
 
 								</option>
 								<inputType id = "com.xmos.cdt.c.compiler.input.c.78274496" name="C" superClass="com.xmos.cdt.c.compiler.input.c"/>
@@ -404,16 +392,10 @@
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/gcc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/c++/4.2.1&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/c++/4.2.1/xcore-xmos-elf&quot;"/>
-                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build}&quot;' />
+                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example}&quot;' />
 <listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/m_locks/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/bin}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example}&quot;' />
 <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks/src}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/fake_inc}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/app_locks_example/.build/m_locks}&quot;' />
+<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_locks}&quot;' />
 
 								</option>
 								<inputType id = "com.xmos.cdt.cxx.compiler.input.cpp.8213476" name="C++" superClass="com.xmos.cdt.cxx.compiler.input.cpp"/>
