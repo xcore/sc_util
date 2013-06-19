@@ -1,5 +1,5 @@
 #include "producer_consumer.h"
-#include "simple_printf.h"
+#include "debug_print.h"
 
 #include <xs1.h>
 #include "platform.h"
@@ -118,7 +118,7 @@ void test_producer_consumer(chanend c0, chanend c1, chanend c2, chanend c3) {
         total += consume(rand, c0, c1, c2, c3);
 
         if ((i++ & 0xff) == 0)
-            simple_printf("Consumed %d\n", total);
+            debug_printf("Consumed %d\n", total);
     }
 }
 
