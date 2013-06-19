@@ -23,7 +23,7 @@ APP_NAME =
 XCC_FLAGS = -O3 -save-temps -g -report -Xmapper --map -Xmapper MAPFILE -DSIM=1
 
 # The USED_MODULES variable lists other module used by the application. 
-USED_MODULES = module_mutual_thread_comm module_random module_xassert
+USED_MODULES = module_mutual_thread_comm module_random module_xassert module_logging
 
 # This change to the module path is so that this application can be in the
 # tests sub-directory in it's git repo

@@ -6,7 +6,7 @@
 #include "platform.h"
 #include "random.h"
 #include "xassert.h"
-#include "simple_printf.h"
+#include "debug_print.h"
 
 static inline void send_uchar(chanend c, unsigned char x) {
     c <: x;
@@ -147,7 +147,7 @@ void test_server(chanend c) {
         test_server_respond(c, check_send_slave(c, x));
         test_server_respond(c, send_check_slave(c, x));
 
-        simple_printf("Test pass %d\n", iteration);
+        debug_printf("Test pass %d\n", iteration);
         iteration += 1;
     }
 }
