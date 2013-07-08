@@ -15,7 +15,14 @@
 __slicekit_init:
   // Only run this on tile[0]
   bl get_local_tile_id
-  bt r0, .Lskip
+  mov r4, r0
+  ldaw r11, cp[tile]
+  ldc r0, 0
+  ld16s r0, r11[r0]
+  zext r0, 16
+  bl get_tile_id
+  eq r0, r0, r4
+  bf r0, .Lskip
 
 __slicekit_init_handle_flash:
   // Enable the clock and port required for doing the output
