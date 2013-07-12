@@ -24,10 +24,6 @@
             <keyword>logging</keyword>
             <keyword>tracing</keyword>
         </component>
-        <component name = "Slicekit Core Board Support Library" type = "component" buildresults_path = "module_slicekit_support/.module_slicekit_support.buildinfo" scope = "General Use" path = "module_slicekit_support" metainfo_path = "module_slicekit_support/module_slicekit_support.metainfo" local = "false" id = "module_slicekit_support" description = "A library for configuring the sliceKIT Core Board ports">
-            <keyword>slicekit</keyword>
-            <keyword>spi</keyword>
-        </component>
     </components>
     <description>General Utilities Repository</description>
     <docdir>module_random/doc</docdir>
