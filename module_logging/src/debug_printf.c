@@ -1,8 +1,50 @@
 #include <debug_print.h>
 #include <print.h>
 #include <stdarg.h>
+#include <syscall.h>
+#include <limits.h>
+#include <print.h>
+#include <string.h>
 
 #undef debug_printf
+
+static void reverse_array(char buf[], unsigned size)
+{
+  int begin = 0;
+  int end = size - 1;
+  int tmp;
+  for (;begin < end;begin++,end--) {
+    tmp = buf[begin];
+    buf[begin] = buf[end];
+    buf[end] = tmp;
+  }
+}
+
+static int itoa(int n, char *buf, int base, int fill)
+{ static const char digits[] = "0123456789ABCDEF";
+  int i = 0;
+  while (n > 0) {
+    int next = n / base;
+    int cur  = n % base;
+    buf[i] = digits[cur];
+    i += 1;
+    fill--;
+    n = next;
+  }
+  for (;fill > 0;fill--) {    
+    buf[i] = '0';
+    i++;
+  }
+  reverse_array(buf, i);
+  return i;
+}
+
+#define MAX_INT_STRING_SIZE 10
+
+#ifndef DEBUG_PRINTF_BUFSIZE
+#define DEBUG_PRINTF_BUFSIZE 130
+#endif
+
 
 void debug_printf(char * fmt, ...)
 {
@@ -11,60 +53,69 @@ void debug_printf(char * fmt, ...)
   unsigned int uintArg;
   char * strArg;
 
+  char buf[DEBUG_PRINTF_BUFSIZE];
+  char *end = &buf[DEBUG_PRINTF_BUFSIZE - 1 - MAX_INT_STRING_SIZE];
+
   va_list args;
 
   va_start(args,fmt);
-
   marker = fmt;	
-  
+  char *p = buf;
   while (*fmt) {
+    if (p > end) {
+      // flush
+      _write(FD_STDOUT, buf, p - buf);
+      p = buf;
+    }
     switch (*fmt) 
       {
       case '%':
-        if (fmt != marker) {
-          char c = *fmt;
-          *fmt = '\0';
-          printstr(marker);
-          *fmt = c;
-        }
         fmt++;
 	switch (*(fmt)) 
 	  {
 	  case 'd':
 	    intArg = va_arg(args, int);
-            printint(intArg);
+            if (intArg < 0) {
+              *p++ = '-';
+              intArg = -intArg;
+            }
+            p += itoa(intArg, p, 10, 0);
             break;
 	  case 'u':
 	    uintArg = va_arg(args, int);
-            printuint(uintArg);
+            p += itoa(uintArg, p, 10, 0);
             break;
 	  case 'x':
 	    uintArg = va_arg(args, int);
-            printhex(uintArg);
+            p += itoa(uintArg, p, 16, 0);
 	    break;
 	  case 'c':
 	    intArg = va_arg(args, int);
-            printchar(intArg);
+            *p++ = intArg;
 	    break;
 	  case 's':
 	    strArg = va_arg(args, char *);
-            printstr(strArg);
-	    break;	    
+            int len = strlen(strArg);
+            if (len > (end - buf)) {
+              // flush
+              _write(FD_STDOUT, buf, p - buf);
+              p = buf;
+            }
+            if (len > (end - buf))
+              len = end - buf;
+            memcpy(p, strArg, len);
+            p += len;
+	    break;
+          default:
+            break;
 	  }
-	fmt++;
-	marker = fmt;
 	break;
-      default: 
-	fmt++;
+      default:
+        *p++ = *fmt;
       }
+    fmt++;
   }
-  if (fmt != marker) {
-    char c = *fmt;
-    *fmt = '\0';
-    printstr(marker);
-    *fmt = c;
-  }
-
+  _write(FD_STDOUT, buf, p - buf);
   va_end(args);
 
   return;
