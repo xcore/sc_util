@@ -62,6 +62,9 @@ DEBUG_PRINT_DISABLE_[debug unit]
 
 #ifndef DEBUG_UNIT
 #define DEBUG_UNIT APPLICATION
+#define DEBUG_ENABLE_DEFAULT 1
+#else
+#define DEBUG_ENABLE_DEFAULT 0
 #endif
 
 #ifndef DEBUG_PRINT_ENABLE
@@ -80,7 +83,7 @@ DEBUG_PRINT_DISABLE_[debug unit]
 #endif
 
 #if !defined(DEBUG_PRINT_ENABLE0)
-#define DEBUG_PRINT_ENABLE0 DEBUG_PRINT_ENABLE
+#define DEBUG_PRINT_ENABLE0 (DEBUG_ENABLE_DEFAULT && DEBUG_PRINT_ENABLE)
 #endif
 
 /**  A limited functionality version of printf that is low memory.
@@ -104,7 +107,6 @@ void debug_printf(char fmt[], ...);
 #else
 #define debug_printf(...)
 #endif
-
 
 
 #endif // _debug_printf_h_
