@@ -14,7 +14,7 @@ trycatch_trap_handler:
 
   // Set sp to trycatch_state.
   get r11, id
-  ldc r0, 5 * 4
+  ldc r0, 3 * 4
   mul r0, r0, r11
   ldap r11, trycatch_state
   add r0, r0, r11
