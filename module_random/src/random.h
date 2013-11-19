@@ -1,3 +1,6 @@
+#ifndef __RANDOM_H__
+#define __RANDOM_H__
+
 #include <xccompat.h>
 
 #ifdef __random_conf_h_exists__
@@ -46,5 +49,4 @@ random_generator_t random_create_generator_from_hw_seed(void);
 unsigned
 random_get_random_number(REFERENCE_PARAM(random_generator_t, g));
 
-
-
+#endif // __RANDOM_H__
