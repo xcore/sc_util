@@ -24,6 +24,9 @@ Unsigned: 5
 Hex: 1F4
 String: hello world
 Char: a
+Zero: 0
+Large uint: 4294967295
+Large hex: FFFF0000
 Unit B
 
 Program exited normally.
@@ -49,6 +52,9 @@ Unsigned: 5
 Hex: 1F4
 String: hello world
 Char: a
+Zero: 0
+Large uint: 4294967295
+Large hex: FFFF0000
 
 Program exited normally.
 
@@ -64,6 +70,9 @@ Unsigned: 5
 Hex: 1F4
 String: hello world
 Char: a
+Zero: 0
+Large uint: 4294967295
+Large hex: FFFF0000
 
 Program exited normally.
 
