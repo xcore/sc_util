@@ -20,12 +20,16 @@ static void reverse_array(char buf[], unsigned size)
   }
 }
 
-static int itoa(int n, char *buf, int base, int fill)
+static int itoa(unsigned n, char *buf, unsigned base, int fill)
 { static const char digits[] = "0123456789ABCDEF";
-  int i = 0;
+  unsigned i = 0;
+
+  if (n == 0)
+    fill += 1;
+
   while (n > 0) {
-    int next = n / base;
-    int cur  = n % base;
+    unsigned next = n / base;
+    unsigned cur  = n % base;
     buf[i] = digits[cur];
     i += 1;
     fill--;
