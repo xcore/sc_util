@@ -8,7 +8,8 @@ bindirs = [os.path.join('bin',d) for d in os.listdir('bin') \
                                  if os.path.isdir(os.path.join('bin',d))]
 bindirs.sort()
 
-gdbregexp = r'Loading section .*|Loading image .*|Start address .*|Transfer rate:.*|0x.* in ??'
+gdbregexp  = 'Loading section .*|Loading image .*|Start address .*|Transfer rate:.*|0x.* in .*'
+gdbregexp += '|First stage .*|Loading setup .*|Loading application .*'
 
 test_output = ""
 for d in bindirs:
@@ -16,7 +17,8 @@ for d in bindirs:
         xe_path = os.path.join(d,xe)
         test_output += "----\n"
         test_output += xe + ":\n\n"
-        output = subprocess.check_output(["xgdb","-batch",xe_path,"-ex","connect -s","-ex","r"],stderr=subprocess.STDOUT)
+        output = subprocess.check_output(["xgdb","-batch",xe_path,"-ex","connect -s","-ex","r"],
+            stderr=subprocess.STDOUT)
         lines = output.split('\n')
         lines = [line for line in lines if not re.match(gdbregexp, line)]
         for line in lines:
