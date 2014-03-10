@@ -31,4 +31,4 @@ inline xc_ptr array_to_xc_ptr(const char a[])
 #define GET_SHARED_GLOBAL(x, g) asm("ldw %0, dp[" #g "]":"=r"(x))
 #define SET_SHARED_GLOBAL(g, v) asm("stw %0, dp[" #g "]"::"r"(v))
 
-#endif 
+#endif

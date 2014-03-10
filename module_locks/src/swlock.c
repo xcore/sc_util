@@ -15,7 +15,7 @@ void swlock_init(swlock_t *_lock)
 extern int swlock_try_acquire(swlock_t *lock);
 
 void swlock_acquire(swlock_t *lock)
-{  
+{
   int value;
   do {
     value = swlock_try_acquire(lock);

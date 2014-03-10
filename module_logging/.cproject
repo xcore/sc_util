@@ -156,8 +156,8 @@
 								<option id = "com.xmos.xc.compiler.option.include.paths.75673414" name="com.xmos.xc.compiler.option.include.paths" superClass="com.xmos.xc.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/gcc&quot;"/>
-                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging/src}&quot;' />
+                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging/src}&quot;' />
+<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging}&quot;' />
 
 								</option>
 								<inputType id = "com.xmos.cdt.xc.compiler.input.1430467" name="XC" superClass="com.xmos.cdt.xc.compiler.input"/>
@@ -269,8 +269,8 @@
 								<option id = "com.xmos.c.compiler.option.include.paths.75861503" name="com.xmos.c.compiler.option.include.paths" superClass="com.xmos.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/gcc&quot;"/>
-                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging/src}&quot;' />
+                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging/src}&quot;' />
+<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging}&quot;' />
 
 								</option>
 								<inputType id = "com.xmos.cdt.c.compiler.input.c.87889295" name="C" superClass="com.xmos.cdt.c.compiler.input.c"/>
@@ -388,8 +388,8 @@
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/gcc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/c++/4.2.1&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${XMOS_TOOL_PATH}/target/include/c++/4.2.1/xcore-xmos-elf&quot;"/>
-                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging}&quot;' />
-<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging/src}&quot;' />
+                                    <listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging/src}&quot;' />
+<listOptionValue builtIn="false" value='&quot;${workspace_loc:/module_logging}&quot;' />
 
 								</option>
 								<inputType id = "com.xmos.cdt.cxx.compiler.input.cpp.59524122" name="C++" superClass="com.xmos.cdt.cxx.compiler.input.cpp"/>

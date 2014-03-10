@@ -4,7 +4,7 @@
  *
  *   XC File: xfifo_internal.h
  *   Author: David Lacey
- * 
+ *
  *************************************************************************/
 /*
  * Copyright (c) 2006-2008 XMOS Ltd.
@@ -29,7 +29,7 @@
 // a[3] = Index of the beginning of the current packet (spos)
 // a[4] = Flag - 0 if current packet has overflowed, 1 otherwise
 
-// The rest of the array is the queue itself, taking up n+1 words of space 
+// The rest of the array is the queue itself, taking up n+1 words of space
 // where n is the size of the queue.
 // The extra space lets us have distinct checks for a full/empty queue.
 

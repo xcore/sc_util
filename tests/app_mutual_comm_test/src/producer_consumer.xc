@@ -91,7 +91,7 @@ static unsigned int consume(random_generator_t rand, chanend c0, chanend c1, cha
         }
 
         total += found;
-        
+
         // Keep going until all channels are empty
         if (num_attempts && !found)
             return total;

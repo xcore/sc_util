@@ -4,7 +4,7 @@
 
 #define FIFO_SIZE 10
 
-void producer(xfifo_t fifo) 
+void producer(xfifo_t fifo)
 {
   for (int i=0;i<5;i++) {
     int success;
@@ -16,7 +16,7 @@ void producer(xfifo_t fifo)
   }
 }
 
-void consumer(xfifo_t fifo) 
+void consumer(xfifo_t fifo)
 {
   for (int i=0;i<5;i++) {
     int x;
@@ -25,7 +25,7 @@ void consumer(xfifo_t fifo)
   }
 }
 
-int main() 
+int main()
 {
   unsigned int buf[FIFO_OVERHEAD + FIFO_SIZE];
   xfifo_t fifo;

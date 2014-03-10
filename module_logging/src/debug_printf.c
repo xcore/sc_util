@@ -35,7 +35,7 @@ static int itoa(unsigned n, char *buf, unsigned base, int fill)
     fill--;
     n = next;
   }
-  for (;fill > 0;fill--) {    
+  for (;fill > 0;fill--) {
     buf[i] = '0';
     i++;
   }
@@ -63,7 +63,7 @@ void debug_printf(char * fmt, ...)
   va_list args;
 
   va_start(args,fmt);
-  marker = fmt;	
+  marker = fmt;
   char *p = buf;
   while (*fmt) {
     if (p > end) {
@@ -71,11 +71,11 @@ void debug_printf(char * fmt, ...)
       _write(FD_STDOUT, buf, p - buf);
       p = buf;
     }
-    switch (*fmt) 
+    switch (*fmt)
       {
       case '%':
         fmt++;
-	switch (*(fmt)) 
+	switch (*(fmt))
 	  {
 	  case 'd':
 	    intArg = va_arg(args, int);

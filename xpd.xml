@@ -1,28 +1,28 @@
 <?xml version="1.0" ?>
 <xpd>
     <components>
-        <component name = "Random number generation module" type = "component" buildresults_path = "module_random/.module_random.buildinfo" scope = "General Use" path = "module_random" metainfo_path = "module_random/module_random.metainfo" local = "false" id = "module_random" description = "Random number generation module"></component>
-        <component name = "Lightweight and flexible assertion module" type = "component" buildresults_path = "module_xassert/.module_xassert.buildinfo" scope = "General Use" path = "module_xassert" metainfo_path = "module_xassert/module_xassert.metainfo" local = "false" id = "module_xassert" description = "Lightweight and flexible assertion module">
-            <keyword>debug</keyword>
-            <keyword>assertion</keyword>
-            <keyword>assert</keyword>
+        <component description = "Example that shows the use of the locks module" type = "demoCode" scope = "Example" path = "app_locks_example" local = "false" id = "app_locks_example" name = "Locks module example">
+            <componentDependency repo = "git://github.com/xcore/sc_util" version = "1.0.3">module_locks</componentDependency>
+        </component>
+        <component description = "Random number generation example" type = "demoCode" scope = "Example" path = "app_random_example" local = "false" id = "app_random_example" name = "Random number generation example">
+            <componentDependency repo = "git://github.com/xcore/sc_util" version = "1.0.3">module_random</componentDependency>
         </component>
         <component name = "Lock Handling Library" type = "component" buildresults_path = "module_locks/.module_locks.buildinfo" scope = "General Use" path = "module_locks" metainfo_path = "module_locks/module_locks.metainfo" local = "false" id = "module_locks" description = "A library for handling hardware and software locks between tasks.">
             <keyword>locks</keyword>
             <keyword>concurrency</keyword>
             <keyword>synchronization</keyword>
         </component>
-        <component description = "Random number generation example" type = "demoCode" scope = "Example" path = "app_random_example" local = "false" id = "app_random_example" name = "Random number generation example">
-            <componentDependency>module_random</componentDependency>
-        </component>
-        <component description = "Example that shows the use of the locks module" type = "demoCode" scope = "Example" path = "app_locks_example" local = "false" id = "app_locks_example" name = "Locks module example">
-            <componentDependency>module_locks</componentDependency>
-        </component>
         <component name = "Debug Printing Module" type = "component" buildresults_path = "module_logging/.module_logging.buildinfo" scope = "General Use" path = "module_logging" metainfo_path = "module_logging/module_logging.metainfo" local = "false" id = "module_logging" description = "A library for debug printing to the console">
             <keyword>printing</keyword>
             <keyword>debug</keyword>
             <keyword>logging</keyword>
             <keyword>tracing</keyword>
+        </component>
+        <component name = "Random number generation module" type = "component" buildresults_path = "module_random/.module_random.buildinfo" scope = "General Use" path = "module_random" metainfo_path = "module_random/module_random.metainfo" local = "false" id = "module_random" description = "Random number generation module"></component>
+        <component name = "Lightweight and flexible assertion module" type = "component" buildresults_path = "module_xassert/.module_xassert.buildinfo" scope = "General Use" path = "module_xassert" metainfo_path = "module_xassert/module_xassert.metainfo" local = "false" id = "module_xassert" description = "Lightweight and flexible assertion module">
+            <keyword>debug</keyword>
+            <keyword>assertion</keyword>
+            <keyword>assert</keyword>
         </component>
     </components>
     <description>General Utilities Repository</description>
@@ -41,9 +41,11 @@
     <release parenthash = "8b380809c5776f5e7d5c6b93ef372423f3658beb" version = "1.0.0rc0" githash = "ad4658a416efc89da12e0327aec872ea0325085e"></release>
     <release parenthash = "39358a309a70c196ae2614a37bc4270530e14d16" version = "1.0.1rc0" githash = "1ed35a50e2d9cc98fcff4c7cc3fb399385ec5d70"></release>
     <release parenthash = "10e22d0443ab07537b8886e1c5ad13aa27bd2d57" version = "1.0.2rc0" githash = "c86abe3668ca7ec0444854a2be0c2aa94fed4d85"></release>
-    <release parenthash = "ee51b815f3579f613914f5b7a12f4e05374da057" version = "1.0.3rc0"></release>
+    <release parenthash = "ee51b815f3579f613914f5b7a12f4e05374da057" version = "1.0.3rc0" githash = "d0531d7c68ab67334582c324828e36d617baf8b3"></release>
+    <release parenthash = "bb24c358b5b1920f809d5943681c70a5cac1a589" version = "1.0.4rc0"></release>
     <subpartnumber>XM-002737-SM</subpartnumber>
     <vendor>XMOS</vendor>
+    <version_defines></version_defines>
     <xcore_repo>sc_util</xcore_repo>
     <xpd_version>1.0</xpd_version>
     <xsoftip_exclude>module_xfifo</xsoftip_exclude>
