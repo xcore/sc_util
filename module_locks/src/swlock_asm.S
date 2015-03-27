@@ -33,5 +33,3 @@ swlock_try_acquire:
 .set swlock_try_acquire.maxchanends, 0
 .set swlock_try_acquire.maxtimers, 0
 .set swlock_try_acquire.maxthreads, 1
-          .core     "XS1"
-          .corerev  "REVB"
