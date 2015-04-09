@@ -1,6 +1,10 @@
 sc_util Change Log
 ==================
 
+1.0.5
+-----
+  * xCORE-200 Compatiblity fixes to module_locks
+
 1.0.4
 -----
   * module_logging now compiled at -Os
