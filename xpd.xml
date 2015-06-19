@@ -2,10 +2,10 @@
 <xpd>
     <components>
         <component description = "Example that shows the use of the locks module" type = "demoCode" scope = "Example" path = "app_locks_example" local = "false" id = "app_locks_example" name = "Locks module example">
-            <componentDependency repo = "git://github.com/xcore/sc_util" version = "1.0.4">module_locks</componentDependency>
+            <componentDependency repo = "git://github.com/xcore/sc_util" version = "1.0.5">module_locks</componentDependency>
         </component>
         <component description = "Random number generation example" type = "demoCode" scope = "Example" path = "app_random_example" local = "false" id = "app_random_example" name = "Random number generation example">
-            <componentDependency repo = "git://github.com/xcore/sc_util" version = "1.0.4">module_random</componentDependency>
+            <componentDependency repo = "git://github.com/xcore/sc_util" version = "1.0.5">module_random</componentDependency>
         </component>
         <component name = "Lock Handling Library" type = "component" buildresults_path = "module_locks/.module_locks.buildinfo" scope = "General Use" path = "module_locks" metainfo_path = "module_locks/module_locks.metainfo" local = "false" id = "module_locks" description = "A library for handling hardware and software locks between tasks.">
             <keyword>locks</keyword>
@@ -43,7 +43,8 @@
     <release parenthash = "10e22d0443ab07537b8886e1c5ad13aa27bd2d57" version = "1.0.2rc0" githash = "c86abe3668ca7ec0444854a2be0c2aa94fed4d85"></release>
     <release parenthash = "ee51b815f3579f613914f5b7a12f4e05374da057" version = "1.0.3rc0" githash = "d0531d7c68ab67334582c324828e36d617baf8b3"></release>
     <release parenthash = "bb24c358b5b1920f809d5943681c70a5cac1a589" version = "1.0.4rc0" githash = "f09fda14976cf969ae792e7c28b4e5a30e4c1eb9"></release>
-    <release parenthash = "04d5b6bf91a974d832ef2c4fe3612522a75c94f0" version = "1.0.5alpha0"></release>
+    <release parenthash = "04d5b6bf91a974d832ef2c4fe3612522a75c94f0" version = "1.0.5alpha0" githash = "490b9efd7f38f02bb5314c95fdfd727f08504c45"></release>
+    <release parenthash = "490b9efd7f38f02bb5314c95fdfd727f08504c45" version = "1.0.5rc0"></release>
     <subpartnumber>XM-002737-SM</subpartnumber>
     <vendor>XMOS</vendor>
     <version_defines></version_defines>
