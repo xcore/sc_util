@@ -9,7 +9,13 @@
 .globl trycatch_trap_handler
 .type trycatch_trap_handler, @function
 .align XS1_KEP_ALIGNMENT
+#ifdef __XS2A__
+.issue_mode single
 trycatch_trap_handler:
+  ENTSP_lu6 0
+#else
+trycatch_trap_handler:
+#endif
   // No need to save state since we end by calling longjmp.
 
   // Set sp to trycatch_state.
@@ -27,6 +33,11 @@ trycatch_trap_handler:
 
   // Store et and ed.
   get r11, et
+#ifdef __XS2A__
+  // An additional et bit (0x16) indicates
+  // the lane that caused the exception.
+  zext r11, 4
+#endif
   stw r11, sp[0]
   get r11, ed
   stw r11, sp[1]
@@ -34,9 +45,17 @@ trycatch_trap_handler:
   // Leave kernel mode.
   kret
 
+#ifdef __XS2A__
+.align 4
+.issue_mode single
+return_from_exception:
+  // Call longjump.
+  ENTSP_lu6 0
+#else
 .align 2
 return_from_exception:
   // Call longjump.
+#endif
   ldw r0, sp[2]
   ldc r1, 1
   bu longjmp
