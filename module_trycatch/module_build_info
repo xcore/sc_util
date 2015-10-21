@@ -8,4 +8,3 @@
 # optimization level -O3).
 #
 # You can also set MODULE_XCC_C_FLAGS, MODULE_XCC_XC_FLAGS etc..
-
