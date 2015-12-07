@@ -1,9 +1,13 @@
 sc_util Change Log
 ==================
 
+1.0.6
+-----
+  * xCORE-200 compatibility fixes to module_trycatch
+
 1.0.5
 -----
-  * xCORE-200 Compatiblity fixes to module_locks
+  * xCORE-200 compatibility fixes to module_locks
 
 1.0.4
 -----
