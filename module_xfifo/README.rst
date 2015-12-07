@@ -1,5 +1,5 @@
 Shared memory fifo library
-=========================
+==========================
 
 :scope: Example
 :description: Shared memory fifo library
